@@ -362,6 +362,7 @@
             Name = "MainForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "ITDeviceManager";
+            Load += MainForm_Load;
             pnlHeader.ResumeLayout(false);
             pnlConfigured.ResumeLayout(false);
             pnlConfigured.PerformLayout();
