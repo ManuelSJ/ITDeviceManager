@@ -4,10 +4,10 @@ using System.Text;
 
 namespace ITDeviceManager
 {
-    internal enum DeviceStatus
+    public enum DeviceStatus
     {
         Ok,
         Pending,
-        Unknowm
+        Unknown
     }
 }

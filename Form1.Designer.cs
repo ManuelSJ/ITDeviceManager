@@ -45,7 +45,7 @@
             btnScan = new Button();
             lblScanStatus = new Label();
             prgScan = new ProgressBar();
-            dgvPendingDevice = new DataGridView();
+            dgvPendingDevices = new DataGridView();
             colDevice = new DataGridViewTextBoxColumn();
             colAddress = new DataGridViewTextBoxColumn();
             colUptime = new DataGridViewTextBoxColumn();
@@ -56,12 +56,14 @@
             lblIntervalText = new Label();
             cmbInterval = new ComboBox();
             lblNextScan = new Label();
+            lblUnavailableDetails = new Label();
+            btnViewUnavailable = new Button();
             pnlHeader.SuspendLayout();
             pnlConfigured.SuspendLayout();
             pnlChecked.SuspendLayout();
             pnlPending.SuspendLayout();
             pnlUnavailable.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvPendingDevice).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgvPendingDevices).BeginInit();
             tlpStats.SuspendLayout();
             SuspendLayout();
             // 
@@ -214,6 +216,7 @@
             btnScan.TabIndex = 4;
             btnScan.Text = "Actualizar ahora";
             btnScan.UseVisualStyleBackColor = true;
+            btnScan.Click += btnScan_Click;
             // 
             // lblScanStatus
             // 
@@ -233,22 +236,22 @@
             prgScan.Size = new Size(500, 20);
             prgScan.TabIndex = 6;
             // 
-            // dgvPendingDevice
+            // dgvPendingDevices
             // 
-            dgvPendingDevice.AllowUserToAddRows = false;
-            dgvPendingDevice.AllowUserToDeleteRows = false;
-            dgvPendingDevice.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            dgvPendingDevice.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvPendingDevice.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvPendingDevice.Columns.AddRange(new DataGridViewColumn[] { colDevice, colAddress, colUptime, colReason, colLastCheck });
-            dgvPendingDevice.Location = new Point(12, 294);
-            dgvPendingDevice.MultiSelect = false;
-            dgvPendingDevice.Name = "dgvPendingDevice";
-            dgvPendingDevice.ReadOnly = true;
-            dgvPendingDevice.RowHeadersVisible = false;
-            dgvPendingDevice.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvPendingDevice.Size = new Size(1160, 355);
-            dgvPendingDevice.TabIndex = 7;
+            dgvPendingDevices.AllowUserToAddRows = false;
+            dgvPendingDevices.AllowUserToDeleteRows = false;
+            dgvPendingDevices.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dgvPendingDevices.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvPendingDevices.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvPendingDevices.Columns.AddRange(new DataGridViewColumn[] { colDevice, colAddress, colUptime, colReason, colLastCheck });
+            dgvPendingDevices.Location = new Point(12, 294);
+            dgvPendingDevices.MultiSelect = false;
+            dgvPendingDevices.Name = "dgvPendingDevices";
+            dgvPendingDevices.ReadOnly = true;
+            dgvPendingDevices.RowHeadersVisible = false;
+            dgvPendingDevices.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvPendingDevices.Size = new Size(1160, 355);
+            dgvPendingDevices.TabIndex = 7;
             // 
             // colDevice
             // 
@@ -343,17 +346,39 @@
             lblNextScan.TabIndex = 12;
             lblNextScan.Text = "Próxima consulta: --:--";
             // 
+            // lblUnavailableDetails
+            // 
+            lblUnavailableDetails.AutoSize = true;
+            lblUnavailableDetails.Location = new Point(525, 264);
+            lblUnavailableDetails.Name = "lblUnavailableDetails";
+            lblUnavailableDetails.Size = new Size(141, 15);
+            lblUnavailableDetails.TabIndex = 13;
+            lblUnavailableDetails.Text = "Equipos no disponibles: 0";
+            lblUnavailableDetails.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // btnViewUnavailable
+            // 
+            btnViewUnavailable.Location = new Point(688, 260);
+            btnViewUnavailable.Name = "btnViewUnavailable";
+            btnViewUnavailable.Size = new Size(46, 23);
+            btnViewUnavailable.TabIndex = 14;
+            btnViewUnavailable.Text = "Ver";
+            btnViewUnavailable.UseVisualStyleBackColor = true;
+            btnViewUnavailable.Click += btnViewUnavailable_Click;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1184, 661);
+            Controls.Add(btnViewUnavailable);
+            Controls.Add(lblUnavailableDetails);
             Controls.Add(lblNextScan);
             Controls.Add(cmbInterval);
             Controls.Add(lblIntervalText);
             Controls.Add(lblautoMonitor);
             Controls.Add(tlpStats);
-            Controls.Add(dgvPendingDevice);
+            Controls.Add(dgvPendingDevices);
             Controls.Add(prgScan);
             Controls.Add(lblScanStatus);
             Controls.Add(btnScan);
@@ -372,7 +397,7 @@
             pnlPending.PerformLayout();
             pnlUnavailable.ResumeLayout(false);
             pnlUnavailable.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvPendingDevice).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgvPendingDevices).EndInit();
             tlpStats.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
@@ -397,7 +422,7 @@
         private Button btnScan;
         private Label lblScanStatus;
         private ProgressBar prgScan;
-        private DataGridView dgvPendingDevice;
+        private DataGridView dgvPendingDevices;
         private DataGridViewTextBoxColumn colDevice;
         private DataGridViewTextBoxColumn colAddress;
         private DataGridViewTextBoxColumn colUptime;
@@ -408,5 +433,7 @@
         private Label lblIntervalText;
         private ComboBox cmbInterval;
         private Label lblNextScan;
+        private Label lblUnavailableDetails;
+        private Button btnViewUnavailable;
     }
 }
