@@ -106,7 +106,19 @@ namespace ITDeviceManager
                 lblConfiguredCount.Text = devices.Count.ToString();
 
                 prgScan.Value = 100;
-                lblScanStatus.Text = "Consulta completada ✓";
+
+                if (int.Parse(lblCheckedCount.Text) == 0 && unavailableDevices.Count > 0)
+                {
+                    lblScanStatus.Text = "No fue posible completar la consulta";
+                }
+                else if (int.Parse(lblPendingCount.Text) == 0 && int.Parse(lblCheckedCount.Text) > 0)
+                {
+                    lblScanStatus.Text = "Sin equipos pendientes actualmente ✓";
+                }
+                else
+                {
+                    lblScanStatus.Text = "Consulta completada ✓";
+                }
 
                 ConfigureMonitoringTimer();
             }
