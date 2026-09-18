@@ -60,6 +60,7 @@
             lblUnavailableDetails = new Label();
             btnViewUnavailable = new Button();
             monitoringTimer = new System.Windows.Forms.Timer(components);
+            btnManageDevices = new Button();
             pnlHeader.SuspendLayout();
             pnlConfigured.SuspendLayout();
             pnlChecked.SuspendLayout();
@@ -224,7 +225,7 @@
             // 
             lblScanStatus.AutoSize = true;
             lblScanStatus.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblScanStatus.Location = new Point(188, 193);
+            lblScanStatus.Location = new Point(12, 240);
             lblScanStatus.Name = "lblScanStatus";
             lblScanStatus.Size = new Size(123, 17);
             lblScanStatus.TabIndex = 5;
@@ -233,7 +234,7 @@
             // prgScan
             // 
             prgScan.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            prgScan.Location = new Point(15, 228);
+            prgScan.Location = new Point(12, 259);
             prgScan.Name = "prgScan";
             prgScan.Size = new Size(500, 20);
             prgScan.TabIndex = 6;
@@ -373,11 +374,23 @@
             // 
             monitoringTimer.Tick += monitoringTimer_Tick;
             // 
+            // btnManageDevices
+            // 
+            btnManageDevices.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnManageDevices.Location = new Point(188, 183);
+            btnManageDevices.Name = "btnManageDevices";
+            btnManageDevices.Size = new Size(170, 40);
+            btnManageDevices.TabIndex = 15;
+            btnManageDevices.Text = "Administrar equipos";
+            btnManageDevices.UseVisualStyleBackColor = true;
+            btnManageDevices.Click += btnManageDevices_Click;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1184, 661);
+            Controls.Add(btnManageDevices);
             Controls.Add(btnViewUnavailable);
             Controls.Add(lblUnavailableDetails);
             Controls.Add(lblNextScan);
@@ -444,5 +457,6 @@
         private Label lblUnavailableDetails;
         private Button btnViewUnavailable;
         private System.Windows.Forms.Timer monitoringTimer;
+        private Button btnManageDevices;
     }
 }

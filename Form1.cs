@@ -2,6 +2,9 @@ namespace ITDeviceManager
 {
     public partial class MainForm : Form
     {
+        private readonly DeviceConfigurationService configurationService = new DeviceConfigurationService();
+        private readonly WindowsDeviceQueryService deviceQueryService = new WindowsDeviceQueryService();
+
         private DemoDeviceProvider demoProvider = new DemoDeviceProvider();
         private List<Device> unavailableDevices = new List<Device>();
         private bool isScanning = false;
@@ -51,7 +54,9 @@ namespace ITDeviceManager
                 prgScan.Value = 0;
                 btnScan.Enabled = false;
 
-                List<Device> devices = demoProvider.GetDevices();
+                List<ConfiguredDevice> configuredDevices = configurationService.LoadDevices();
+
+                lblConfiguredCount.Text = configuredDevices.Count.ToString();
 
                 lblCheckedCount.Text = "0";
                 int processedDevices = 0;
@@ -63,9 +68,25 @@ namespace ITDeviceManager
                 lblUnavailableDetails.Text = "Equipos no disponibles: 0";
                 unavailableDevices.Clear();
 
-                foreach (Device device in devices)
+                foreach (ConfiguredDevice configuredDevice in configuredDevices)
                 {
-                    await Task.Delay(1000);
+                    Device device;
+
+                    try
+                    {
+                        device = await deviceQueryService.CheckDeviceAsync(configuredDevice);
+                    }
+                    catch
+                    {
+                        device = new Device
+                        {
+                            Name = configuredDevice.Identifier,
+                            Address = configuredDevice.Identifier,
+                            Status = DeviceStatus.Unknown,
+                            LastCheck = DateTime.Now,
+                            Reason = "No fue posible consultar el equipo"
+                        };
+                    }
 
                     processedDevices++;
 
@@ -99,11 +120,9 @@ namespace ITDeviceManager
                             $"Equipos no disponibles: {unavailableDevices.Count}";
                     }
 
-                    int progress = processedDevices * 100 / devices.Count;
+                    int progress = processedDevices * 100 / configuredDevices.Count;
                     prgScan.Value = progress;
                 }
-
-                lblConfiguredCount.Text = devices.Count.ToString();
 
                 prgScan.Value = 100;
 
@@ -155,6 +174,16 @@ namespace ITDeviceManager
         private async void MainForm_Shown(object sender, EventArgs e)
         {
             await ScanDevicesAsync();
+        }
+
+        private async void btnManageDevices_Click(object sender, EventArgs e)
+        {
+            using ManageDevicesForm form = new ManageDevicesForm();
+
+            if (form.ShowDialog(this) == DialogResult.OK)
+            {
+                await ScanDevicesAsync();
+            }
         }
     }
 }
