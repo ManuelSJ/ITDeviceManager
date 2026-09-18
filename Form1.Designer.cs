@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             pnlHeader = new Panel();
             lblTitle = new Label();
             pnlConfigured = new Panel();
@@ -58,6 +59,7 @@
             lblNextScan = new Label();
             lblUnavailableDetails = new Label();
             btnViewUnavailable = new Button();
+            monitoringTimer = new System.Windows.Forms.Timer(components);
             pnlHeader.SuspendLayout();
             pnlConfigured.SuspendLayout();
             pnlChecked.SuspendLayout();
@@ -334,6 +336,7 @@
             cmbInterval.Name = "cmbInterval";
             cmbInterval.Size = new Size(100, 23);
             cmbInterval.TabIndex = 11;
+            cmbInterval.SelectedIndexChanged += cmbInterval_SelectedIndexChanged;
             // 
             // lblNextScan
             // 
@@ -366,6 +369,10 @@
             btnViewUnavailable.UseVisualStyleBackColor = true;
             btnViewUnavailable.Click += btnViewUnavailable_Click;
             // 
+            // monitoringTimer
+            // 
+            monitoringTimer.Tick += monitoringTimer_Tick;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -388,6 +395,7 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "ITDeviceManager";
             Load += MainForm_Load;
+            Shown += MainForm_Shown;
             pnlHeader.ResumeLayout(false);
             pnlConfigured.ResumeLayout(false);
             pnlConfigured.PerformLayout();
@@ -435,5 +443,6 @@
         private Label lblNextScan;
         private Label lblUnavailableDetails;
         private Button btnViewUnavailable;
+        private System.Windows.Forms.Timer monitoringTimer;
     }
 }
