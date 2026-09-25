@@ -7,18 +7,79 @@ namespace ITDeviceManager
 {
     public class WindowsUpdateStatusService
     {
-        public bool IsRebootRequired(string computerName)
+        public RebootStatus GetRebootStatus(string computerName)
         {
-            using RegistryKey remoteRegistry =
-                RegistryKey.OpenRemoteBaseKey(
-                    RegistryHive.LocalMachine,
-                    computerName);
+            try
+            {
 
-            using RegistryKey? rebootRequiredKey =
-                remoteRegistry.OpenSubKey(
-                    @"SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update\RebootRequired");
+                using RegistryKey remoteRegistry =
+                    RegistryKey.OpenRemoteBaseKey(
+                        RegistryHive.LocalMachine,
+                        computerName);
 
-            return rebootRequiredKey != null;
+                using RegistryKey? rebootRequiredKey =
+                    remoteRegistry.OpenSubKey(
+                        @"SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update\RebootRequired");
+
+                using RegistryKey? componentBasedServicingKey =
+                   remoteRegistry.OpenSubKey(
+                        @"SOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\RebootPending");
+
+                using RegistryKey? sessionManagerKey =
+                   remoteRegistry.OpenSubKey(
+                        @"SYSTEM\CurrentControlSet\Control\Session Manager");
+
+                bool hasPendingFileRename =
+                    sessionManagerKey?.GetValue("PendingFileRenameOperations") != null;
+
+                if (rebootRequiredKey != null)
+                {
+                    return new RebootStatus
+                    {
+                        IsRebootRequired = true,
+                        IsCheckSuccessful = true,
+                        Reason = "Reinicio pendiente por Windows Update"
+                    };
+                }
+
+                if (componentBasedServicingKey != null)
+                {
+                    return new RebootStatus
+                    {
+                        IsRebootRequired = true,
+                        IsCheckSuccessful = true,
+                        Reason = "Reinicio pendiente por mantenimiento de Windows"
+                    };
+                }
+
+                if (hasPendingFileRename)
+                {
+                    return new RebootStatus
+                    {
+                        IsRebootRequired = true,
+                        IsCheckSuccessful = true,
+                        Reason = "Operación de archivos pendiente"
+                    };
+                }
+
+                return new RebootStatus
+                {
+                    IsRebootRequired = false,
+                    IsCheckSuccessful = true,
+                    Reason = ""
+                };
+
+            }
+
+            catch
+            {
+                return new RebootStatus
+                {
+                    IsRebootRequired = false,
+                    IsCheckSuccessful = false,
+                    Reason = "No fue posible verificar el estado de reinicio"
+                };
+            }
         }
     }
 }

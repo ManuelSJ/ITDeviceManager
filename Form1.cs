@@ -114,6 +114,17 @@ namespace ITDeviceManager
                         );
                     }
 
+                    if (device.Status == DeviceStatus.Unverified)
+                    {
+                        dgvPendingDevices.Rows.Add(
+                            device.Name ?? string.Empty,
+                            device.Address ?? string.Empty,
+                            $"{device.Uptime.Days} días",
+                            device.Reason ?? string.Empty,
+                            device.LastCheck?.ToString("dd/MM/yyyy HH:mm") ?? string.Empty
+                        );
+                    }
+
                     if (device.Status == DeviceStatus.Unknown)
                     {
                         unavailableDevices.Add(device);

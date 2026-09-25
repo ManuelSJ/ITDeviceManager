@@ -8,6 +8,7 @@ namespace ITDeviceManager
     {
         Ok,
         Pending,
-        Unknown
+        Unknown,
+        Unverified
     }
 }

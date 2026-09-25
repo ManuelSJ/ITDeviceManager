@@ -40,22 +40,22 @@ namespace ITDeviceManager
                     DateTime bootTime =
                         ManagementDateTimeConverter.ToDateTime(bootTimeValue);
 
-                    bool rebootRequired = windowsUpdateStatusService.IsRebootRequired(identifier);
+                    RebootStatus rebootStatus = windowsUpdateStatusService.GetRebootStatus(identifier);
 
                     return new Device
                     {
                         Name = computerName,
                         Address = identifier,
-                        Status = rebootRequired
-                           ? DeviceStatus.Pending
-                           : DeviceStatus.Ok,
+                        Status = !rebootStatus.IsCheckSuccessful
+                            ? DeviceStatus.Unverified
+                            : rebootStatus.IsRebootRequired
+                            ? DeviceStatus.Pending
+                            : DeviceStatus.Ok,
 
                         LastCheck = DateTime.Now,
                         Uptime = DateTime.Now - bootTime,
 
-                        Reason = rebootRequired
-                            ? "Actualización pendiente"
-                            : ""
+                        Reason = rebootStatus.Reason
                     };
                 }
 
