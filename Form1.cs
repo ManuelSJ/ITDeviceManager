@@ -5,7 +5,6 @@ namespace ITDeviceManager
         private readonly DeviceConfigurationService configurationService = new DeviceConfigurationService();
         private readonly WindowsDeviceQueryService deviceQueryService = new WindowsDeviceQueryService();
 
-        private DemoDeviceProvider demoProvider = new DemoDeviceProvider();
         private List<Device> unavailableDevices = new List<Device>();
         private bool isScanning = false;
 
@@ -21,7 +20,12 @@ namespace ITDeviceManager
 
         private void ConfigureMonitoringTimer()
         {
-            string selectedInterval = cmbInterval.SelectedItem.ToString();
+            string? selectedInterval = cmbInterval.SelectedItem?.ToString();
+
+            if (string.IsNullOrWhiteSpace(selectedInterval))
+            {
+                return;
+            }
 
             int hours = int.Parse(selectedInterval.Split(' ')[0]);
 
@@ -102,11 +106,11 @@ namespace ITDeviceManager
                             (int.Parse(lblPendingCount.Text) + 1).ToString();
 
                         dgvPendingDevices.Rows.Add(
-                            device.Name,
-                            device.Address,
-                            $"{device.Uptime.Days} días",
-                            device.Reason,
-                            device.LastCheck
+                           device.Name ?? string.Empty,
+                           device.Address ?? string.Empty,
+                           $"{device.Uptime.Days} días",
+                           device.Reason ?? string.Empty,
+                           device.LastCheck?.ToString("dd/MM/yyyy HH:mm") ?? string.Empty
                         );
                     }
 
