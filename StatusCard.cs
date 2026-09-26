@@ -23,6 +23,7 @@ namespace ITDeviceManager
 
             DoubleBuffered = true;
             ApplyTheme();
+            UpdateRoundedRegion();
         }
 
         [Category("ITDeviceManager")]
@@ -85,9 +86,6 @@ namespace ITDeviceManager
                 cardRectangle,
                 14
             );
-
-            Region?.Dispose();
-            Region = new Region(cardPath);
 
             Color statusColor = GetStatusColor();
 
@@ -157,6 +155,33 @@ namespace ITDeviceManager
                 18,
                 45
             );
+        }
+
+        protected override void OnResize(EventArgs e)
+        {
+            base.OnResize(e);
+
+            UpdateRoundedRegion();
+        }
+
+        private void UpdateRoundedRegion()
+        {
+            if (Width <= 0 || Height <= 0)
+                return;
+
+            Rectangle bounds = new Rectangle(
+                0,
+                0,
+                Width - 1,
+                Height - 1
+            );
+
+            using GraphicsPath path = CreateRoundedRectangle(bounds, 14);
+
+            Region?.Dispose();
+            Region = new Region(path);
+
+            Invalidate();
         }
 
         private static GraphicsPath CreateRoundedRectangle(
