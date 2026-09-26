@@ -1,3 +1,6 @@
+using System.Drawing.Drawing2D;
+using System.Runtime.InteropServices;
+
 namespace ITDeviceManager
 {
     public partial class MainForm : Form
@@ -12,10 +15,61 @@ namespace ITDeviceManager
         {
             InitializeComponent();
 
+            dgvPendingDevices.Resize += (s, e) =>
+            {
+                ApplyRoundedCorners(dgvPendingDevices, 20);
+            };
+
+            ApplyRoundedCorners(dgvPendingDevices, 20);
+
+            dgvPendingDevices.ClearSelection();
+            dgvPendingDevices.CurrentCell = null;
+
+            dgvPendingDevices.SelectionChanged += (s, e) =>
+            {
+                dgvPendingDevices.ClearSelection();
+                dgvPendingDevices.CurrentCell = null;
+            };
+
+            dgvPendingDevices.GotFocus += (s, e) =>
+            {
+                pnlMain.Focus();
+            };
+
             cmbInterval.SelectedItem = "6 horas";
             ConfigureMonitoringTimer();
 
             lblScanStatus.Text = "Listo para consultar";
+        }
+
+        [DllImport("user32.dll")]
+        private static extern bool ReleaseCapture();
+
+        [DllImport("user32.dll")]
+        private static extern IntPtr SendMessage(
+            IntPtr hWnd,
+            int Msg,
+            IntPtr wParam,
+            IntPtr lParam);
+
+        private const int WM_NCLBUTTONDOWN = 0xA1;
+        private const int HTCAPTION = 0x2;
+
+        private void ApplyRoundedCorners(Control control, int radius)
+        {
+            Rectangle bounds = new Rectangle(0, 0, control.Width, control.Height);
+            using GraphicsPath path = new GraphicsPath();
+
+            int diameter = radius * 2;
+
+            path.AddArc(bounds.X, bounds.Y, diameter, diameter, 180, 90);
+            path.AddArc(bounds.Right - diameter, bounds.Y, diameter, diameter, 270, 90);
+            path.AddArc(bounds.Right - diameter, bounds.Bottom - diameter, diameter, diameter, 0, 90);
+            path.AddArc(bounds.X, bounds.Bottom - diameter, diameter, diameter, 90, 90);
+            path.CloseFigure();
+
+            control.Region?.Dispose();
+            control.Region = new Region(path);
         }
 
         private void ConfigureMonitoringTimer()
@@ -60,15 +114,17 @@ namespace ITDeviceManager
 
                 List<ConfiguredDevice> configuredDevices = configurationService.LoadDevices();
 
-                lblConfiguredCount.Text = configuredDevices.Count.ToString();
+                cardConfigured.CardValue = configuredDevices.Count.ToString();
 
-                lblCheckedCount.Text = "0";
+                cardChecked.CardValue = "0";
                 int processedDevices = 0;
+                int checkedDevices = 0;
+                int pendingDevices = 0;
 
-                lblPendingCount.Text = "0";
+                cardPending.CardValue = "0";
                 dgvPendingDevices.Rows.Clear();
 
-                lblUnavailableCount.Text = "0";
+                cardUnavailable.CardValue = "0";
                 lblUnavailableDetails.Text = "Equipos no disponibles: 0";
                 unavailableDevices.Clear();
 
@@ -96,14 +152,17 @@ namespace ITDeviceManager
 
                     if (device.Status != DeviceStatus.Unknown)
                     {
-                        lblCheckedCount.Text =
-                            (int.Parse(lblCheckedCount.Text) + 1).ToString();
+                        checkedDevices++;
+                        cardChecked.CardValue = processedDevices.ToString();
                     }
+
+
+
 
                     if (device.Status == DeviceStatus.Pending)
                     {
-                        lblPendingCount.Text =
-                            (int.Parse(lblPendingCount.Text) + 1).ToString();
+                        pendingDevices++;
+                        cardPending.CardValue = pendingDevices.ToString();
 
                         dgvPendingDevices.Rows.Add(
                            device.Name ?? string.Empty,
@@ -111,6 +170,8 @@ namespace ITDeviceManager
                            $"{device.Uptime.Days} días",
                            device.Reason ?? string.Empty,
                            device.LastCheck?.ToString("dd/MM/yyyy HH:mm") ?? string.Empty
+
+
                         );
                     }
 
@@ -129,7 +190,7 @@ namespace ITDeviceManager
                     {
                         unavailableDevices.Add(device);
 
-                        lblUnavailableCount.Text = unavailableDevices.Count.ToString();
+                        cardUnavailable.CardValue = unavailableDevices.Count.ToString();
 
                         lblUnavailableDetails.Text =
                             $"Equipos no disponibles: {unavailableDevices.Count}";
@@ -141,11 +202,11 @@ namespace ITDeviceManager
 
                 prgScan.Value = 100;
 
-                if (int.Parse(lblCheckedCount.Text) == 0 && unavailableDevices.Count > 0)
+                if (checkedDevices == 0 && unavailableDevices.Count > 0)
                 {
                     lblScanStatus.Text = "No fue posible completar la consulta";
                 }
-                else if (int.Parse(lblPendingCount.Text) == 0 && int.Parse(lblCheckedCount.Text) > 0)
+                else if (pendingDevices == 0 && checkedDevices > 0)
                 {
                     lblScanStatus.Text = "Sin equipos pendientes actualmente ✓";
                 }
@@ -198,6 +259,108 @@ namespace ITDeviceManager
             if (form.ShowDialog(this) == DialogResult.OK)
             {
                 await ScanDevicesAsync();
+            }
+        }
+
+        private void cmbInterval_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void MainForm_Paint(object sender, PaintEventArgs e)
+        {
+            e.Graphics.SmoothingMode =
+                System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+
+            Color lightBlue = Color.FromArgb(190, 225, 245);
+
+            using Pen pen = new Pen(lightBlue, 2);
+
+            // Patrón superior izquierdo
+            Point[] topLeft =
+            {
+        new Point(0, 90),
+        new Point(90, 120),
+        new Point(155, 75),
+        new Point(220, 145),
+        new Point(145, 205),
+        new Point(70, 165),
+        new Point(0, 210)
+    };
+
+            e.Graphics.DrawLines(pen, topLeft);
+
+            // Algunas conexiones internas
+            e.Graphics.DrawLine(pen, topLeft[1], topLeft[4]);
+            e.Graphics.DrawLine(pen, topLeft[2], topLeft[5]);
+
+
+            // Patrón superior derecho
+            Point[] topRight =
+            {
+        new Point(ClientSize.Width, 100),
+        new Point(ClientSize.Width - 80, 130),
+        new Point(ClientSize.Width - 145, 85),
+        new Point(ClientSize.Width - 220, 155),
+        new Point(ClientSize.Width - 145, 220),
+        new Point(ClientSize.Width - 65, 175),
+        new Point(ClientSize.Width, 220)
+    };
+
+            e.Graphics.DrawLines(pen, topRight);
+
+            e.Graphics.DrawLine(pen, topRight[1], topRight[4]);
+            e.Graphics.DrawLine(pen, topRight[2], topRight[5]);
+
+
+            // Patrón inferior izquierdo
+            Point[] bottomLeft =
+            {
+        new Point(0, ClientSize.Height - 190),
+        new Point(80, ClientSize.Height - 220),
+        new Point(150, ClientSize.Height - 160),
+        new Point(215, ClientSize.Height - 210),
+        new Point(250, ClientSize.Height - 110),
+        new Point(160, ClientSize.Height - 55),
+        new Point(70, ClientSize.Height - 100),
+        new Point(0, ClientSize.Height - 55)
+    };
+
+            e.Graphics.DrawLines(pen, bottomLeft);
+
+            e.Graphics.DrawLine(pen, bottomLeft[1], bottomLeft[5]);
+            e.Graphics.DrawLine(pen, bottomLeft[2], bottomLeft[6]);
+            e.Graphics.DrawLine(pen, bottomLeft[3], bottomLeft[5]);
+        }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void btnMinimize_Click(object sender, EventArgs e)
+        {
+            WindowState = FormWindowState.Minimized;
+        }
+
+        private void btnMaximize_Click(object sender, EventArgs e)
+        {
+            if (WindowState == FormWindowState.Maximized)
+            {
+                WindowState = FormWindowState.Normal;
+            }
+            else
+            {
+                WindowState = FormWindowState.Maximized;
+            }
+        }
+
+        private void pnlTitleBar_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                ReleaseCapture();
+                SendMessage(Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
             }
         }
     }

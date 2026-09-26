@@ -29,232 +29,170 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             pnlHeader = new Panel();
             lblTitle = new Label();
-            pnlConfigured = new Panel();
-            lblConfiguredText = new Label();
-            lblConfiguredCount = new Label();
-            pnlChecked = new Panel();
-            lblCheckedText = new Label();
-            lblCheckedCount = new Label();
-            pnlPending = new Panel();
-            lblPendingText = new Label();
-            lblPendingCount = new Label();
-            pnlUnavailable = new Panel();
-            lblUnavailableText = new Label();
-            lblUnavailableCount = new Label();
-            btnScan = new Button();
-            lblScanStatus = new Label();
-            prgScan = new ProgressBar();
+            monitoringTimer = new System.Windows.Forms.Timer(components);
+            cardPending = new StatusCard();
+            pnlMain = new Panel();
             dgvPendingDevices = new DataGridView();
             colDevice = new DataGridViewTextBoxColumn();
             colAddress = new DataGridViewTextBoxColumn();
             colUptime = new DataGridViewTextBoxColumn();
             colReason = new DataGridViewTextBoxColumn();
             colLastCheck = new DataGridViewTextBoxColumn();
-            tlpStats = new TableLayoutPanel();
-            lblautoMonitor = new Label();
-            lblIntervalText = new Label();
-            cmbInterval = new ComboBox();
-            lblNextScan = new Label();
-            lblUnavailableDetails = new Label();
-            btnViewUnavailable = new Button();
-            monitoringTimer = new System.Windows.Forms.Timer(components);
+            pnlControls = new Panel();
+            tlpControls = new TableLayoutPanel();
+            flpScanStatus = new FlowLayoutPanel();
+            lblScanStatus = new Label();
+            flpAction = new FlowLayoutPanel();
+            btnScan = new Button();
             btnManageDevices = new Button();
+            flpMonitoring = new FlowLayoutPanel();
+            lblautoMonitor = new Label();
+            cmbInterval = new ComboBox();
+            lblIntervalText = new Label();
+            flpNextScan = new FlowLayoutPanel();
+            lblNextScan = new Label();
+            prgScan = new ProgressBar();
+            flpUnavailable = new FlowLayoutPanel();
+            btnViewUnavailable = new Button();
+            lblUnavailableDetails = new Label();
+            tlpStatusCards = new TableLayoutPanel();
+            cardUnverified = new StatusCard();
+            cardUnavailable = new StatusCard();
+            cardChecked = new StatusCard();
+            cardConfigured = new StatusCard();
+            pnlTitleBar = new Panel();
+            btnMinimize = new Button();
+            btnMaximize = new Button();
+            btnClose = new Button();
+            lblTitleBar = new Label();
             pnlHeader.SuspendLayout();
-            pnlConfigured.SuspendLayout();
-            pnlChecked.SuspendLayout();
-            pnlPending.SuspendLayout();
-            pnlUnavailable.SuspendLayout();
+            pnlMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvPendingDevices).BeginInit();
-            tlpStats.SuspendLayout();
+            pnlControls.SuspendLayout();
+            tlpControls.SuspendLayout();
+            flpScanStatus.SuspendLayout();
+            flpAction.SuspendLayout();
+            flpMonitoring.SuspendLayout();
+            flpNextScan.SuspendLayout();
+            flpUnavailable.SuspendLayout();
+            tlpStatusCards.SuspendLayout();
+            pnlTitleBar.SuspendLayout();
             SuspendLayout();
             // 
             // pnlHeader
             // 
+            pnlHeader.BackColor = Color.Transparent;
             pnlHeader.Controls.Add(lblTitle);
             pnlHeader.Dock = DockStyle.Top;
-            pnlHeader.Location = new Point(0, 0);
+            pnlHeader.Location = new Point(0, 42);
             pnlHeader.Name = "pnlHeader";
-            pnlHeader.Size = new Size(1184, 80);
+            pnlHeader.Padding = new Padding(28, 8, 28, 8);
+            pnlHeader.Size = new Size(1184, 88);
             pnlHeader.TabIndex = 0;
             // 
             // lblTitle
             // 
+            lblTitle.BackColor = Color.Transparent;
             lblTitle.Dock = DockStyle.Fill;
-            lblTitle.Font = new Font("Segoe UI", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblTitle.Location = new Point(0, 0);
+            lblTitle.Font = new Font("Segoe UI", 21.75F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
+            lblTitle.ForeColor = SystemColors.Highlight;
+            lblTitle.Location = new Point(28, 8);
             lblTitle.Name = "lblTitle";
-            lblTitle.Size = new Size(1184, 80);
+            lblTitle.Size = new Size(1128, 72);
             lblTitle.TabIndex = 0;
             lblTitle.Text = "ITDeviceManager";
             lblTitle.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // pnlConfigured
+            // monitoringTimer
             // 
-            pnlConfigured.Controls.Add(lblConfiguredText);
-            pnlConfigured.Controls.Add(lblConfiguredCount);
-            pnlConfigured.Dock = DockStyle.Fill;
-            pnlConfigured.Location = new Point(3, 3);
-            pnlConfigured.Name = "pnlConfigured";
-            pnlConfigured.Size = new Size(283, 84);
-            pnlConfigured.TabIndex = 1;
+            monitoringTimer.Tick += monitoringTimer_Tick;
             // 
-            // lblConfiguredText
+            // cardPending
             // 
-            lblConfiguredText.AutoSize = true;
-            lblConfiguredText.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblConfiguredText.Location = new Point(23, 46);
-            lblConfiguredText.Name = "lblConfiguredText";
-            lblConfiguredText.Size = new Size(136, 17);
-            lblConfiguredText.TabIndex = 1;
-            lblConfiguredText.Text = "Equipos configurados";
+            cardPending.BackColor = Color.White;
+            cardPending.CardTitle = "Reinicio pendiente";
+            cardPending.CardType = StatusCardType.Warning;
+            cardPending.CardValue = "0";
+            cardPending.Dock = DockStyle.Fill;
+            cardPending.ForeColor = Color.FromArgb(25, 29, 35);
+            cardPending.Location = new Point(458, 12);
+            cardPending.Margin = new Padding(8);
+            cardPending.Name = "cardPending";
+            cardPending.Size = new Size(209, 97);
+            cardPending.TabIndex = 16;
             // 
-            // lblConfiguredCount
+            // pnlMain
             // 
-            lblConfiguredCount.AutoSize = true;
-            lblConfiguredCount.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblConfiguredCount.Location = new Point(23, 14);
-            lblConfiguredCount.Name = "lblConfiguredCount";
-            lblConfiguredCount.Size = new Size(28, 32);
-            lblConfiguredCount.TabIndex = 0;
-            lblConfiguredCount.Text = "0";
-            // 
-            // pnlChecked
-            // 
-            pnlChecked.Controls.Add(lblCheckedText);
-            pnlChecked.Controls.Add(lblCheckedCount);
-            pnlChecked.Dock = DockStyle.Fill;
-            pnlChecked.Location = new Point(292, 3);
-            pnlChecked.Name = "pnlChecked";
-            pnlChecked.Size = new Size(283, 84);
-            pnlChecked.TabIndex = 2;
-            // 
-            // lblCheckedText
-            // 
-            lblCheckedText.AutoSize = true;
-            lblCheckedText.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblCheckedText.Location = new Point(23, 46);
-            lblCheckedText.Name = "lblCheckedText";
-            lblCheckedText.Size = new Size(129, 17);
-            lblCheckedText.TabIndex = 1;
-            lblCheckedText.Text = "Equipos consultados";
-            // 
-            // lblCheckedCount
-            // 
-            lblCheckedCount.AutoSize = true;
-            lblCheckedCount.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblCheckedCount.Location = new Point(23, 14);
-            lblCheckedCount.Name = "lblCheckedCount";
-            lblCheckedCount.Size = new Size(28, 32);
-            lblCheckedCount.TabIndex = 0;
-            lblCheckedCount.Text = "0";
-            // 
-            // pnlPending
-            // 
-            pnlPending.Controls.Add(lblPendingText);
-            pnlPending.Controls.Add(lblPendingCount);
-            pnlPending.Dock = DockStyle.Fill;
-            pnlPending.Location = new Point(581, 3);
-            pnlPending.Name = "pnlPending";
-            pnlPending.Size = new Size(283, 84);
-            pnlPending.TabIndex = 3;
-            // 
-            // lblPendingText
-            // 
-            lblPendingText.AutoSize = true;
-            lblPendingText.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblPendingText.Location = new Point(23, 46);
-            lblPendingText.Name = "lblPendingText";
-            lblPendingText.Size = new Size(115, 17);
-            lblPendingText.TabIndex = 1;
-            lblPendingText.Text = "Reinicio pendiente";
-            // 
-            // lblPendingCount
-            // 
-            lblPendingCount.AutoSize = true;
-            lblPendingCount.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblPendingCount.Location = new Point(23, 14);
-            lblPendingCount.Name = "lblPendingCount";
-            lblPendingCount.Size = new Size(28, 32);
-            lblPendingCount.TabIndex = 0;
-            lblPendingCount.Text = "0";
-            // 
-            // pnlUnavailable
-            // 
-            pnlUnavailable.Controls.Add(lblUnavailableText);
-            pnlUnavailable.Controls.Add(lblUnavailableCount);
-            pnlUnavailable.Dock = DockStyle.Fill;
-            pnlUnavailable.Location = new Point(870, 3);
-            pnlUnavailable.Name = "pnlUnavailable";
-            pnlUnavailable.Size = new Size(284, 84);
-            pnlUnavailable.TabIndex = 2;
-            // 
-            // lblUnavailableText
-            // 
-            lblUnavailableText.AutoSize = true;
-            lblUnavailableText.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblUnavailableText.Location = new Point(23, 46);
-            lblUnavailableText.Name = "lblUnavailableText";
-            lblUnavailableText.Size = new Size(97, 17);
-            lblUnavailableText.TabIndex = 1;
-            lblUnavailableText.Text = "No disponibles";
-            // 
-            // lblUnavailableCount
-            // 
-            lblUnavailableCount.AutoSize = true;
-            lblUnavailableCount.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblUnavailableCount.Location = new Point(23, 14);
-            lblUnavailableCount.Name = "lblUnavailableCount";
-            lblUnavailableCount.Size = new Size(28, 32);
-            lblUnavailableCount.TabIndex = 0;
-            lblUnavailableCount.Text = "0";
-            // 
-            // btnScan
-            // 
-            btnScan.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnScan.Location = new Point(12, 182);
-            btnScan.Name = "btnScan";
-            btnScan.Size = new Size(170, 40);
-            btnScan.TabIndex = 4;
-            btnScan.Text = "Actualizar ahora";
-            btnScan.UseVisualStyleBackColor = true;
-            btnScan.Click += btnScan_Click;
-            // 
-            // lblScanStatus
-            // 
-            lblScanStatus.AutoSize = true;
-            lblScanStatus.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblScanStatus.Location = new Point(12, 240);
-            lblScanStatus.Name = "lblScanStatus";
-            lblScanStatus.Size = new Size(123, 17);
-            lblScanStatus.TabIndex = 5;
-            lblScanStatus.Text = "Listo para consultar";
-            // 
-            // prgScan
-            // 
-            prgScan.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            prgScan.Location = new Point(12, 259);
-            prgScan.Name = "prgScan";
-            prgScan.Size = new Size(500, 20);
-            prgScan.TabIndex = 6;
+            pnlMain.BackColor = Color.Transparent;
+            pnlMain.Controls.Add(dgvPendingDevices);
+            pnlMain.Controls.Add(pnlControls);
+            pnlMain.Controls.Add(tlpStatusCards);
+            pnlMain.Dock = DockStyle.Fill;
+            pnlMain.Location = new Point(0, 130);
+            pnlMain.Name = "pnlMain";
+            pnlMain.Padding = new Padding(28, 0, 28, 24);
+            pnlMain.Size = new Size(1184, 570);
+            pnlMain.TabIndex = 17;
+            pnlMain.Paint += MainForm_Paint;
             // 
             // dgvPendingDevices
             // 
             dgvPendingDevices.AllowUserToAddRows = false;
             dgvPendingDevices.AllowUserToDeleteRows = false;
-            dgvPendingDevices.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dgvPendingDevices.AllowUserToResizeRows = false;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(250, 250, 250);
+            dgvPendingDevices.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             dgvPendingDevices.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvPendingDevices.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvPendingDevices.BackgroundColor = Color.White;
+            dgvPendingDevices.BorderStyle = BorderStyle.None;
+            dgvPendingDevices.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = Color.FromArgb(190, 225, 245);
+            dataGridViewCellStyle2.Font = new Font("Segoe UI Variable Small Semibol", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle2.ForeColor = Color.Black;
+            dataGridViewCellStyle2.Padding = new Padding(8, 0, 8, 0);
+            dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(190, 225, 245);
+            dataGridViewCellStyle2.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
+            dgvPendingDevices.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dgvPendingDevices.ColumnHeadersHeight = 44;
+            dgvPendingDevices.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             dgvPendingDevices.Columns.AddRange(new DataGridViewColumn[] { colDevice, colAddress, colUptime, colReason, colLastCheck });
-            dgvPendingDevices.Location = new Point(12, 294);
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = Color.FromArgb(245, 248, 250);
+            dataGridViewCellStyle3.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle3.ForeColor = Color.FromArgb(51, 51, 51);
+            dataGridViewCellStyle3.Padding = new Padding(8, 0, 8, 0);
+            dataGridViewCellStyle3.SelectionBackColor = Color.WhiteSmoke;
+            dataGridViewCellStyle3.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
+            dgvPendingDevices.DefaultCellStyle = dataGridViewCellStyle3;
+            dgvPendingDevices.Dock = DockStyle.Fill;
+            dgvPendingDevices.EnableHeadersVisualStyles = false;
+            dgvPendingDevices.GridColor = Color.White;
+            dgvPendingDevices.Location = new Point(28, 230);
             dgvPendingDevices.MultiSelect = false;
             dgvPendingDevices.Name = "dgvPendingDevices";
             dgvPendingDevices.ReadOnly = true;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = Color.FromArgb(190, 225, 245);
+            dataGridViewCellStyle4.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle4.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
+            dgvPendingDevices.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
             dgvPendingDevices.RowHeadersVisible = false;
+            dgvPendingDevices.RowTemplate.Height = 42;
             dgvPendingDevices.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvPendingDevices.Size = new Size(1160, 355);
-            dgvPendingDevices.TabIndex = 7;
+            dgvPendingDevices.Size = new Size(1128, 316);
+            dgvPendingDevices.TabIndex = 8;
             // 
             // colDevice
             // 
@@ -286,46 +224,125 @@
             colLastCheck.Name = "colLastCheck";
             colLastCheck.ReadOnly = true;
             // 
-            // tlpStats
+            // pnlControls
             // 
-            tlpStats.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            tlpStats.ColumnCount = 4;
-            tlpStats.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
-            tlpStats.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
-            tlpStats.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
-            tlpStats.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
-            tlpStats.Controls.Add(pnlConfigured, 0, 0);
-            tlpStats.Controls.Add(pnlChecked, 1, 0);
-            tlpStats.Controls.Add(pnlPending, 2, 0);
-            tlpStats.Controls.Add(pnlUnavailable, 3, 0);
-            tlpStats.Location = new Point(15, 86);
-            tlpStats.Name = "tlpStats";
-            tlpStats.RowCount = 1;
-            tlpStats.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tlpStats.Size = new Size(1157, 90);
-            tlpStats.TabIndex = 8;
+            pnlControls.BackColor = Color.Transparent;
+            pnlControls.Controls.Add(tlpControls);
+            pnlControls.Controls.Add(lblUnavailableDetails);
+            pnlControls.Dock = DockStyle.Top;
+            pnlControls.Location = new Point(28, 125);
+            pnlControls.Margin = new Padding(0);
+            pnlControls.Name = "pnlControls";
+            pnlControls.Padding = new Padding(16, 10, 16, 10);
+            pnlControls.Size = new Size(1128, 105);
+            pnlControls.TabIndex = 10;
+            // 
+            // tlpControls
+            // 
+            tlpControls.ColumnCount = 3;
+            tlpControls.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 34F));
+            tlpControls.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33F));
+            tlpControls.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33F));
+            tlpControls.Controls.Add(flpScanStatus, 0, 1);
+            tlpControls.Controls.Add(flpAction, 0, 0);
+            tlpControls.Controls.Add(flpMonitoring, 2, 0);
+            tlpControls.Controls.Add(flpNextScan, 2, 1);
+            tlpControls.Controls.Add(prgScan, 0, 2);
+            tlpControls.Controls.Add(flpUnavailable, 1, 0);
+            tlpControls.Dock = DockStyle.Fill;
+            tlpControls.Location = new Point(16, 10);
+            tlpControls.Margin = new Padding(0);
+            tlpControls.Name = "tlpControls";
+            tlpControls.RowCount = 3;
+            tlpControls.RowStyles.Add(new RowStyle(SizeType.Percent, 40F));
+            tlpControls.RowStyles.Add(new RowStyle(SizeType.Percent, 35F));
+            tlpControls.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
+            tlpControls.Size = new Size(1096, 85);
+            tlpControls.TabIndex = 25;
+            // 
+            // flpScanStatus
+            // 
+            flpScanStatus.BackColor = Color.Transparent;
+            flpScanStatus.Controls.Add(lblScanStatus);
+            flpScanStatus.Dock = DockStyle.Fill;
+            flpScanStatus.Location = new Point(0, 34);
+            flpScanStatus.Margin = new Padding(0);
+            flpScanStatus.Name = "flpScanStatus";
+            flpScanStatus.Padding = new Padding(4, 2, 4, 2);
+            flpScanStatus.Size = new Size(372, 29);
+            flpScanStatus.TabIndex = 22;
+            // 
+            // lblScanStatus
+            // 
+            lblScanStatus.AutoSize = true;
+            lblScanStatus.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblScanStatus.Location = new Point(7, 2);
+            lblScanStatus.Name = "lblScanStatus";
+            lblScanStatus.Size = new Size(123, 17);
+            lblScanStatus.TabIndex = 24;
+            lblScanStatus.Text = "Listo para consultar";
+            // 
+            // flpAction
+            // 
+            flpAction.BackColor = Color.Transparent;
+            flpAction.Controls.Add(btnScan);
+            flpAction.Controls.Add(btnManageDevices);
+            flpAction.Dock = DockStyle.Fill;
+            flpAction.Location = new Point(0, 0);
+            flpAction.Margin = new Padding(0);
+            flpAction.Name = "flpAction";
+            flpAction.Padding = new Padding(4);
+            flpAction.Size = new Size(372, 34);
+            flpAction.TabIndex = 18;
+            flpAction.WrapContents = false;
+            // 
+            // btnScan
+            // 
+            btnScan.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnScan.Location = new Point(7, 7);
+            btnScan.Name = "btnScan";
+            btnScan.Size = new Size(170, 28);
+            btnScan.TabIndex = 7;
+            btnScan.Text = "Actualizar ahora";
+            btnScan.UseVisualStyleBackColor = true;
+            btnScan.Click += btnScan_Click;
+            // 
+            // btnManageDevices
+            // 
+            btnManageDevices.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnManageDevices.Location = new Point(183, 7);
+            btnManageDevices.Name = "btnManageDevices";
+            btnManageDevices.Size = new Size(170, 28);
+            btnManageDevices.TabIndex = 18;
+            btnManageDevices.Text = "Administrar equipos";
+            btnManageDevices.UseVisualStyleBackColor = true;
+            btnManageDevices.Click += btnManageDevices_Click;
+            // 
+            // flpMonitoring
+            // 
+            flpMonitoring.BackColor = Color.Transparent;
+            flpMonitoring.Controls.Add(lblautoMonitor);
+            flpMonitoring.Controls.Add(cmbInterval);
+            flpMonitoring.Controls.Add(lblIntervalText);
+            flpMonitoring.Dock = DockStyle.Fill;
+            flpMonitoring.Location = new Point(733, 0);
+            flpMonitoring.Margin = new Padding(0);
+            flpMonitoring.Name = "flpMonitoring";
+            flpMonitoring.Padding = new Padding(4);
+            flpMonitoring.Size = new Size(363, 34);
+            flpMonitoring.TabIndex = 19;
+            flpMonitoring.WrapContents = false;
             // 
             // lblautoMonitor
             // 
             lblautoMonitor.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             lblautoMonitor.AutoSize = true;
             lblautoMonitor.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblautoMonitor.Location = new Point(522, 194);
+            lblautoMonitor.Location = new Point(7, 4);
             lblautoMonitor.Name = "lblautoMonitor";
             lblautoMonitor.Size = new Size(196, 17);
-            lblautoMonitor.TabIndex = 9;
+            lblautoMonitor.TabIndex = 18;
             lblautoMonitor.Text = "Monitoreo automático: Activado";
-            // 
-            // lblIntervalText
-            // 
-            lblIntervalText.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            lblIntervalText.AutoSize = true;
-            lblIntervalText.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblIntervalText.Location = new Point(733, 194);
-            lblIntervalText.Name = "lblIntervalText";
-            lblIntervalText.Size = new Size(61, 17);
-            lblIntervalText.TabIndex = 10;
-            lblIntervalText.Text = "Intervalo:";
             // 
             // cmbInterval
             // 
@@ -333,130 +350,322 @@
             cmbInterval.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbInterval.FormattingEnabled = true;
             cmbInterval.Items.AddRange(new object[] { "2 horas", "4 horas", "6 horas", "8 horas", "12 horas" });
-            cmbInterval.Location = new Point(793, 192);
+            cmbInterval.Location = new Point(209, 7);
             cmbInterval.Name = "cmbInterval";
             cmbInterval.Size = new Size(100, 23);
-            cmbInterval.TabIndex = 11;
-            cmbInterval.SelectedIndexChanged += cmbInterval_SelectedIndexChanged;
+            cmbInterval.TabIndex = 19;
+            // 
+            // lblIntervalText
+            // 
+            lblIntervalText.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            lblIntervalText.AutoSize = true;
+            lblIntervalText.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblIntervalText.Location = new Point(315, 4);
+            lblIntervalText.Name = "lblIntervalText";
+            lblIntervalText.Size = new Size(61, 17);
+            lblIntervalText.TabIndex = 20;
+            lblIntervalText.Text = "Intervalo:";
+            // 
+            // flpNextScan
+            // 
+            flpNextScan.BackColor = Color.Transparent;
+            flpNextScan.Controls.Add(lblNextScan);
+            flpNextScan.Dock = DockStyle.Fill;
+            flpNextScan.Location = new Point(733, 34);
+            flpNextScan.Margin = new Padding(0);
+            flpNextScan.Name = "flpNextScan";
+            flpNextScan.Padding = new Padding(4, 2, 4, 2);
+            flpNextScan.Size = new Size(363, 29);
+            flpNextScan.TabIndex = 23;
+            flpNextScan.WrapContents = false;
             // 
             // lblNextScan
             // 
             lblNextScan.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             lblNextScan.AutoSize = true;
             lblNextScan.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblNextScan.Location = new Point(522, 228);
+            lblNextScan.Location = new Point(7, 2);
             lblNextScan.Name = "lblNextScan";
             lblNextScan.Size = new Size(137, 17);
-            lblNextScan.TabIndex = 12;
+            lblNextScan.TabIndex = 21;
             lblNextScan.Text = "Próxima consulta: --:--";
+            // 
+            // prgScan
+            // 
+            tlpControls.SetColumnSpan(prgScan, 3);
+            prgScan.Dock = DockStyle.Fill;
+            prgScan.Location = new Point(4, 65);
+            prgScan.Margin = new Padding(4, 2, 4, 4);
+            prgScan.Name = "prgScan";
+            prgScan.Size = new Size(1088, 16);
+            prgScan.TabIndex = 21;
+            // 
+            // flpUnavailable
+            // 
+            flpUnavailable.BackColor = Color.Transparent;
+            flpUnavailable.Controls.Add(btnViewUnavailable);
+            flpUnavailable.Dock = DockStyle.Fill;
+            flpUnavailable.Location = new Point(372, 0);
+            flpUnavailable.Margin = new Padding(0);
+            flpUnavailable.Name = "flpUnavailable";
+            flpUnavailable.Padding = new Padding(4);
+            flpUnavailable.Size = new Size(361, 34);
+            flpUnavailable.TabIndex = 24;
+            flpUnavailable.WrapContents = false;
+            // 
+            // btnViewUnavailable
+            // 
+            btnViewUnavailable.Location = new Point(7, 7);
+            btnViewUnavailable.Name = "btnViewUnavailable";
+            btnViewUnavailable.Size = new Size(46, 23);
+            btnViewUnavailable.TabIndex = 25;
+            btnViewUnavailable.Text = "Ver";
+            btnViewUnavailable.UseVisualStyleBackColor = true;
             // 
             // lblUnavailableDetails
             // 
             lblUnavailableDetails.AutoSize = true;
-            lblUnavailableDetails.Location = new Point(525, 264);
+            lblUnavailableDetails.Location = new Point(506, 85);
             lblUnavailableDetails.Name = "lblUnavailableDetails";
             lblUnavailableDetails.Size = new Size(141, 15);
-            lblUnavailableDetails.TabIndex = 13;
+            lblUnavailableDetails.TabIndex = 23;
             lblUnavailableDetails.Text = "Equipos no disponibles: 0";
             lblUnavailableDetails.TextAlign = ContentAlignment.MiddleLeft;
+            lblUnavailableDetails.Visible = false;
             // 
-            // btnViewUnavailable
+            // tlpStatusCards
             // 
-            btnViewUnavailable.Location = new Point(688, 260);
-            btnViewUnavailable.Name = "btnViewUnavailable";
-            btnViewUnavailable.Size = new Size(46, 23);
-            btnViewUnavailable.TabIndex = 14;
-            btnViewUnavailable.Text = "Ver";
-            btnViewUnavailable.UseVisualStyleBackColor = true;
-            btnViewUnavailable.Click += btnViewUnavailable_Click;
+            tlpStatusCards.ColumnCount = 5;
+            tlpStatusCards.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+            tlpStatusCards.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+            tlpStatusCards.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+            tlpStatusCards.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+            tlpStatusCards.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+            tlpStatusCards.Controls.Add(cardUnverified, 4, 0);
+            tlpStatusCards.Controls.Add(cardUnavailable, 3, 0);
+            tlpStatusCards.Controls.Add(cardChecked, 1, 0);
+            tlpStatusCards.Controls.Add(cardConfigured, 0, 0);
+            tlpStatusCards.Controls.Add(cardPending, 2, 0);
+            tlpStatusCards.Dock = DockStyle.Top;
+            tlpStatusCards.Location = new Point(28, 0);
+            tlpStatusCards.Margin = new Padding(0);
+            tlpStatusCards.Name = "tlpStatusCards";
+            tlpStatusCards.Padding = new Padding(0, 4, 0, 8);
+            tlpStatusCards.RowCount = 1;
+            tlpStatusCards.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tlpStatusCards.Size = new Size(1128, 125);
+            tlpStatusCards.TabIndex = 9;
             // 
-            // monitoringTimer
+            // cardUnverified
             // 
-            monitoringTimer.Tick += monitoringTimer_Tick;
+            cardUnverified.BackColor = Color.White;
+            cardUnverified.CardTitle = "Sin verificar";
+            cardUnverified.CardType = StatusCardType.Unverified;
+            cardUnverified.CardValue = "0";
+            cardUnverified.Dock = DockStyle.Fill;
+            cardUnverified.ForeColor = Color.FromArgb(25, 29, 35);
+            cardUnverified.Location = new Point(908, 12);
+            cardUnverified.Margin = new Padding(8);
+            cardUnverified.Name = "cardUnverified";
+            cardUnverified.Size = new Size(212, 97);
+            cardUnverified.TabIndex = 20;
             // 
-            // btnManageDevices
+            // cardUnavailable
             // 
-            btnManageDevices.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnManageDevices.Location = new Point(188, 183);
-            btnManageDevices.Name = "btnManageDevices";
-            btnManageDevices.Size = new Size(170, 40);
-            btnManageDevices.TabIndex = 15;
-            btnManageDevices.Text = "Administrar equipos";
-            btnManageDevices.UseVisualStyleBackColor = true;
-            btnManageDevices.Click += btnManageDevices_Click;
+            cardUnavailable.BackColor = Color.White;
+            cardUnavailable.CardTitle = "No disponible";
+            cardUnavailable.CardType = StatusCardType.Danger;
+            cardUnavailable.CardValue = "0";
+            cardUnavailable.Dock = DockStyle.Fill;
+            cardUnavailable.ForeColor = Color.FromArgb(25, 29, 35);
+            cardUnavailable.Location = new Point(683, 12);
+            cardUnavailable.Margin = new Padding(8);
+            cardUnavailable.Name = "cardUnavailable";
+            cardUnavailable.Size = new Size(209, 97);
+            cardUnavailable.TabIndex = 19;
+            // 
+            // cardChecked
+            // 
+            cardChecked.BackColor = Color.White;
+            cardChecked.CardTitle = "Equipos consultados";
+            cardChecked.CardType = StatusCardType.Success;
+            cardChecked.CardValue = "0";
+            cardChecked.Dock = DockStyle.Fill;
+            cardChecked.ForeColor = Color.FromArgb(25, 29, 35);
+            cardChecked.Location = new Point(233, 12);
+            cardChecked.Margin = new Padding(8);
+            cardChecked.Name = "cardChecked";
+            cardChecked.Size = new Size(209, 97);
+            cardChecked.TabIndex = 18;
+            // 
+            // cardConfigured
+            // 
+            cardConfigured.BackColor = Color.White;
+            cardConfigured.CardTitle = "Equipos configurados";
+            cardConfigured.CardType = StatusCardType.Neutral;
+            cardConfigured.CardValue = "0";
+            cardConfigured.Dock = DockStyle.Fill;
+            cardConfigured.ForeColor = Color.FromArgb(25, 29, 35);
+            cardConfigured.Location = new Point(8, 12);
+            cardConfigured.Margin = new Padding(8);
+            cardConfigured.Name = "cardConfigured";
+            cardConfigured.Size = new Size(209, 97);
+            cardConfigured.TabIndex = 17;
+            // 
+            // pnlTitleBar
+            // 
+            pnlTitleBar.BackColor = Color.FromArgb(25, 43, 70);
+            pnlTitleBar.Controls.Add(btnMinimize);
+            pnlTitleBar.Controls.Add(btnMaximize);
+            pnlTitleBar.Controls.Add(btnClose);
+            pnlTitleBar.Controls.Add(lblTitleBar);
+            pnlTitleBar.Dock = DockStyle.Top;
+            pnlTitleBar.Location = new Point(0, 0);
+            pnlTitleBar.Name = "pnlTitleBar";
+            pnlTitleBar.Size = new Size(1184, 42);
+            pnlTitleBar.TabIndex = 21;
+            pnlTitleBar.MouseDown += pnlTitleBar_MouseDown;
+            // 
+            // btnMinimize
+            // 
+            btnMinimize.Cursor = Cursors.Hand;
+            btnMinimize.Dock = DockStyle.Right;
+            btnMinimize.FlatAppearance.BorderSize = 0;
+            btnMinimize.FlatStyle = FlatStyle.Flat;
+            btnMinimize.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnMinimize.ForeColor = Color.White;
+            btnMinimize.Location = new Point(1046, 0);
+            btnMinimize.Name = "btnMinimize";
+            btnMinimize.Size = new Size(46, 42);
+            btnMinimize.TabIndex = 3;
+            btnMinimize.TabStop = false;
+            btnMinimize.Text = "__";
+            btnMinimize.UseVisualStyleBackColor = true;
+            btnMinimize.Click += btnMinimize_Click;
+            // 
+            // btnMaximize
+            // 
+            btnMaximize.Cursor = Cursors.Hand;
+            btnMaximize.Dock = DockStyle.Right;
+            btnMaximize.FlatAppearance.BorderSize = 0;
+            btnMaximize.FlatStyle = FlatStyle.Flat;
+            btnMaximize.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnMaximize.ForeColor = Color.White;
+            btnMaximize.Location = new Point(1092, 0);
+            btnMaximize.Name = "btnMaximize";
+            btnMaximize.Size = new Size(46, 42);
+            btnMaximize.TabIndex = 2;
+            btnMaximize.TabStop = false;
+            btnMaximize.Text = "□";
+            btnMaximize.UseVisualStyleBackColor = true;
+            btnMaximize.Click += btnMaximize_Click;
+            // 
+            // btnClose
+            // 
+            btnClose.Cursor = Cursors.Hand;
+            btnClose.Dock = DockStyle.Right;
+            btnClose.FlatAppearance.BorderSize = 0;
+            btnClose.FlatStyle = FlatStyle.Flat;
+            btnClose.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnClose.ForeColor = Color.White;
+            btnClose.Location = new Point(1138, 0);
+            btnClose.Name = "btnClose";
+            btnClose.Size = new Size(46, 42);
+            btnClose.TabIndex = 1;
+            btnClose.TabStop = false;
+            btnClose.Text = "X";
+            btnClose.UseVisualStyleBackColor = true;
+            btnClose.Click += btnClose_Click;
+            // 
+            // lblTitleBar
+            // 
+            lblTitleBar.AutoSize = true;
+            lblTitleBar.BackColor = Color.Transparent;
+            lblTitleBar.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblTitleBar.ForeColor = Color.White;
+            lblTitleBar.Location = new Point(40, 11);
+            lblTitleBar.Name = "lblTitleBar";
+            lblTitleBar.Size = new Size(115, 17);
+            lblTitleBar.TabIndex = 0;
+            lblTitleBar.Text = "ITDeviceManager";
             // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1184, 661);
-            Controls.Add(btnManageDevices);
-            Controls.Add(btnViewUnavailable);
-            Controls.Add(lblUnavailableDetails);
-            Controls.Add(lblNextScan);
-            Controls.Add(cmbInterval);
-            Controls.Add(lblIntervalText);
-            Controls.Add(lblautoMonitor);
-            Controls.Add(tlpStats);
-            Controls.Add(dgvPendingDevices);
-            Controls.Add(prgScan);
-            Controls.Add(lblScanStatus);
-            Controls.Add(btnScan);
+            BackColor = Color.FromArgb(245, 247, 250);
+            ClientSize = new Size(1184, 700);
+            Controls.Add(pnlMain);
             Controls.Add(pnlHeader);
-            MinimumSize = new Size(1100, 650);
+            Controls.Add(pnlTitleBar);
+            FormBorderStyle = FormBorderStyle.None;
+            MinimumSize = new Size(1100, 700);
             Name = "MainForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "ITDeviceManager";
+            WindowState = FormWindowState.Maximized;
             Load += MainForm_Load;
             Shown += MainForm_Shown;
+            Paint += MainForm_Paint;
             pnlHeader.ResumeLayout(false);
-            pnlConfigured.ResumeLayout(false);
-            pnlConfigured.PerformLayout();
-            pnlChecked.ResumeLayout(false);
-            pnlChecked.PerformLayout();
-            pnlPending.ResumeLayout(false);
-            pnlPending.PerformLayout();
-            pnlUnavailable.ResumeLayout(false);
-            pnlUnavailable.PerformLayout();
+            pnlMain.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvPendingDevices).EndInit();
-            tlpStats.ResumeLayout(false);
+            pnlControls.ResumeLayout(false);
+            pnlControls.PerformLayout();
+            tlpControls.ResumeLayout(false);
+            flpScanStatus.ResumeLayout(false);
+            flpScanStatus.PerformLayout();
+            flpAction.ResumeLayout(false);
+            flpMonitoring.ResumeLayout(false);
+            flpMonitoring.PerformLayout();
+            flpNextScan.ResumeLayout(false);
+            flpNextScan.PerformLayout();
+            flpUnavailable.ResumeLayout(false);
+            tlpStatusCards.ResumeLayout(false);
+            pnlTitleBar.ResumeLayout(false);
+            pnlTitleBar.PerformLayout();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
 
         private Panel pnlHeader;
         private Label lblTitle;
-        private Panel pnlConfigured;
-        private Label lblConfiguredText;
-        private Label lblConfiguredCount;
-        private Panel pnlChecked;
-        private Label lblCheckedText;
-        private Label lblCheckedCount;
-        private Panel pnlPending;
-        private Label lblPendingText;
-        private Label lblPendingCount;
-        private Panel pnlUnavailable;
-        private Label lblUnavailableText;
-        private Label lblUnavailableCount;
-        private Button btnScan;
-        private Label lblScanStatus;
-        private ProgressBar prgScan;
+        private System.Windows.Forms.Timer monitoringTimer;
+        private StatusCard cardPending;
+        private Panel pnlMain;
         private DataGridView dgvPendingDevices;
         private DataGridViewTextBoxColumn colDevice;
         private DataGridViewTextBoxColumn colAddress;
         private DataGridViewTextBoxColumn colUptime;
         private DataGridViewTextBoxColumn colReason;
         private DataGridViewTextBoxColumn colLastCheck;
-        private TableLayoutPanel tlpStats;
-        private Label lblautoMonitor;
-        private Label lblIntervalText;
-        private ComboBox cmbInterval;
-        private Label lblNextScan;
+        private TableLayoutPanel tlpStatusCards;
+        private StatusCard cardUnverified;
+        private StatusCard cardUnavailable;
+        private StatusCard cardChecked;
+        private StatusCard cardConfigured;
+        private Panel pnlControls;
+        private ProgressBar prgScan;
         private Label lblUnavailableDetails;
-        private Button btnViewUnavailable;
-        private System.Windows.Forms.Timer monitoringTimer;
+        private TableLayoutPanel tlpControls;
+        private FlowLayoutPanel flpAction;
+        private Button btnScan;
         private Button btnManageDevices;
+        private FlowLayoutPanel flpMonitoring;
+        private Label lblautoMonitor;
+        private ComboBox cmbInterval;
+        private Label lblIntervalText;
+        private FlowLayoutPanel flpScanStatus;
+        private Label lblScanStatus;
+        private FlowLayoutPanel flpNextScan;
+        private Label lblNextScan;
+        private FlowLayoutPanel flpUnavailable;
+        private Button btnViewUnavailable;
+        private Panel pnlTitleBar;
+        private Button btnClose;
+        private Label lblTitleBar;
+        private Button btnMaximize;
+        private Button btnMinimize;
     }
 }
