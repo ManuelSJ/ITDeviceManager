@@ -15,6 +15,8 @@ namespace ITDeviceManager
         {
             InitializeComponent();
 
+           
+
             dgvPendingDevices.Resize += (s, e) =>
             {
                 ApplyRoundedCorners(dgvPendingDevices, 20);
@@ -125,7 +127,6 @@ namespace ITDeviceManager
                 dgvPendingDevices.Rows.Clear();
 
                 cardUnavailable.CardValue = "0";
-                lblUnavailableDetails.Text = "Equipos no disponibles: 0";
                 unavailableDevices.Clear();
 
                 foreach (ConfiguredDevice configuredDevice in configuredDevices)
@@ -192,8 +193,6 @@ namespace ITDeviceManager
 
                         cardUnavailable.CardValue = unavailableDevices.Count.ToString();
 
-                        lblUnavailableDetails.Text =
-                            $"Equipos no disponibles: {unavailableDevices.Count}";
                     }
 
                     int progress = processedDevices * 100 / configuredDevices.Count;
