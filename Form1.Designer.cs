@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle10 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle11 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle12 = new DataGridViewCellStyle();
             pnlHeader = new Panel();
             lblTitle = new Label();
             monitoringTimer = new System.Windows.Forms.Timer(components);
@@ -62,7 +62,7 @@
             flpMonitoring3 = new FlowLayoutPanel();
             lblNextScan = new Label();
             fplProgress2 = new FlowLayoutPanel();
-            prgScan = new ProgressBar();
+            modernProgressBar1 = new ModernProgressBar();
             tlpStatusCards = new TableLayoutPanel();
             cardUnverified = new StatusCard();
             cardUnavailable = new StatusCard();
@@ -151,33 +151,33 @@
             dgvPendingDevices.AllowUserToAddRows = false;
             dgvPendingDevices.AllowUserToDeleteRows = false;
             dgvPendingDevices.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.BackColor = Color.FromArgb(250, 250, 250);
-            dgvPendingDevices.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle9.BackColor = Color.FromArgb(250, 250, 250);
+            dgvPendingDevices.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle9;
             dgvPendingDevices.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvPendingDevices.BackgroundColor = Color.White;
             dgvPendingDevices.BorderStyle = BorderStyle.None;
             dgvPendingDevices.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = Color.FromArgb(190, 225, 245);
-            dataGridViewCellStyle2.Font = new Font("Segoe UI Variable Small Semibol", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle2.ForeColor = Color.Black;
-            dataGridViewCellStyle2.Padding = new Padding(8, 0, 8, 0);
-            dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(190, 225, 245);
-            dataGridViewCellStyle2.SelectionForeColor = Color.Black;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
-            dgvPendingDevices.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle10.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle10.BackColor = Color.FromArgb(190, 225, 245);
+            dataGridViewCellStyle10.Font = new Font("Segoe UI Variable Small Semibol", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle10.ForeColor = Color.Black;
+            dataGridViewCellStyle10.Padding = new Padding(8, 0, 8, 0);
+            dataGridViewCellStyle10.SelectionBackColor = Color.FromArgb(190, 225, 245);
+            dataGridViewCellStyle10.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle10.WrapMode = DataGridViewTriState.True;
+            dgvPendingDevices.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
             dgvPendingDevices.ColumnHeadersHeight = 44;
             dgvPendingDevices.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             dgvPendingDevices.Columns.AddRange(new DataGridViewColumn[] { colDevice, colAddress, colUptime, colReason, colLastCheck });
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = Color.FromArgb(245, 248, 250);
-            dataGridViewCellStyle3.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle3.ForeColor = Color.FromArgb(51, 51, 51);
-            dataGridViewCellStyle3.Padding = new Padding(8, 0, 8, 0);
-            dataGridViewCellStyle3.SelectionBackColor = Color.WhiteSmoke;
-            dataGridViewCellStyle3.SelectionForeColor = Color.Black;
-            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
-            dgvPendingDevices.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle11.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle11.BackColor = Color.FromArgb(245, 248, 250);
+            dataGridViewCellStyle11.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle11.ForeColor = Color.FromArgb(51, 51, 51);
+            dataGridViewCellStyle11.Padding = new Padding(8, 0, 8, 0);
+            dataGridViewCellStyle11.SelectionBackColor = Color.WhiteSmoke;
+            dataGridViewCellStyle11.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle11.WrapMode = DataGridViewTriState.False;
+            dgvPendingDevices.DefaultCellStyle = dataGridViewCellStyle11;
             dgvPendingDevices.Dock = DockStyle.Fill;
             dgvPendingDevices.EnableHeadersVisualStyles = false;
             dgvPendingDevices.GridColor = Color.White;
@@ -185,14 +185,14 @@
             dgvPendingDevices.MultiSelect = false;
             dgvPendingDevices.Name = "dgvPendingDevices";
             dgvPendingDevices.ReadOnly = true;
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = Color.FromArgb(190, 225, 245);
-            dataGridViewCellStyle4.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle4.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
-            dgvPendingDevices.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle12.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle12.BackColor = Color.FromArgb(190, 225, 245);
+            dataGridViewCellStyle12.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle12.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle12.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle12.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle12.WrapMode = DataGridViewTriState.True;
+            dgvPendingDevices.RowHeadersDefaultCellStyle = dataGridViewCellStyle12;
             dgvPendingDevices.RowHeadersVisible = false;
             dgvPendingDevices.RowTemplate.Height = 42;
             dgvPendingDevices.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
@@ -325,6 +325,7 @@
             btnManageDevices.TabIndex = 25;
             btnManageDevices.Text = "Administrar equipos";
             btnManageDevices.UseVisualStyleBackColor = false;
+            btnManageDevices.Click += btnManageDevices_Click;
             // 
             // flpAction3
             // 
@@ -355,6 +356,7 @@
             btnViewUnavailable.TabIndex = 27;
             btnViewUnavailable.Text = "Equipos no disponibles";
             btnViewUnavailable.UseVisualStyleBackColor = false;
+            btnViewUnavailable.Click += btnViewUnavailable_Click;
             // 
             // fplprogress
             // 
@@ -374,7 +376,8 @@
             lblScanStatus.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             lblScanStatus.AutoSize = true;
             lblScanStatus.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblScanStatus.Location = new Point(7, 4);
+            lblScanStatus.Location = new Point(4, 19);
+            lblScanStatus.Margin = new Padding(0, 15, 15, 0);
             lblScanStatus.Name = "lblScanStatus";
             lblScanStatus.Size = new Size(123, 17);
             lblScanStatus.TabIndex = 26;
@@ -439,6 +442,7 @@
             cmbInterval.Name = "cmbInterval";
             cmbInterval.Size = new Size(100, 23);
             cmbInterval.TabIndex = 22;
+            cmbInterval.SelectedIndexChanged += cmbInterval_SelectedIndexChanged;
             // 
             // flpMonitoring3
             // 
@@ -465,7 +469,7 @@
             // 
             // fplProgress2
             // 
-            fplProgress2.Controls.Add(prgScan);
+            fplProgress2.Controls.Add(modernProgressBar1);
             fplProgress2.Dock = DockStyle.Fill;
             fplProgress2.Location = new Point(525, 78);
             fplProgress2.Margin = new Padding(0);
@@ -475,14 +479,16 @@
             fplProgress2.TabIndex = 29;
             fplProgress2.WrapContents = false;
             // 
-            // prgScan
+            // modernProgressBar1
             // 
-            prgScan.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            prgScan.Location = new Point(8, 6);
-            prgScan.Margin = new Padding(4, 2, 4, 4);
-            prgScan.Name = "prgScan";
-            prgScan.Size = new Size(1088, 10);
-            prgScan.TabIndex = 23;
+            modernProgressBar1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            modernProgressBar1.Location = new Point(4, 19);
+            modernProgressBar1.Margin = new Padding(0, 15, 0, 2);
+            modernProgressBar1.MinimumSize = new Size(0, 13);
+            modernProgressBar1.Name = "modernProgressBar1";
+            modernProgressBar1.Size = new Size(565, 13);
+            modernProgressBar1.TabIndex = 24;
+            modernProgressBar1.Text = "modernProgressBar1";
             // 
             // tlpStatusCards
             // 
@@ -724,6 +730,6 @@
         private Label lblNextScan;
         private Label lblScanStatus;
         private FlowLayoutPanel fplProgress2;
-        private ProgressBar prgScan;
+        private ModernProgressBar modernProgressBar1;
     }
 }

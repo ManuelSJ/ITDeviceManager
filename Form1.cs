@@ -15,7 +15,7 @@ namespace ITDeviceManager
         {
             InitializeComponent();
 
-           
+
 
             dgvPendingDevices.Resize += (s, e) =>
             {
@@ -111,7 +111,7 @@ namespace ITDeviceManager
             try
             {
                 lblScanStatus.Text = "Consultando equipos...";
-                prgScan.Value = 0;
+                modernProgressBar1.Value = 0;
                 btnScan.Enabled = false;
 
                 List<ConfiguredDevice> configuredDevices = configurationService.LoadDevices();
@@ -196,10 +196,10 @@ namespace ITDeviceManager
                     }
 
                     int progress = processedDevices * 100 / configuredDevices.Count;
-                    prgScan.Value = progress;
+                    modernProgressBar1.Value = progress;
                 }
 
-                prgScan.Value = 100;
+                modernProgressBar1.Value = 100;
 
                 if (checkedDevices == 0 && unavailableDevices.Count > 0)
                 {
@@ -259,11 +259,6 @@ namespace ITDeviceManager
             {
                 await ScanDevicesAsync();
             }
-        }
-
-        private void cmbInterval_SelectedIndexChanged_1(object sender, EventArgs e)
-        {
-
         }
 
         private void MainForm_Paint(object sender, PaintEventArgs e)
