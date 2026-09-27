@@ -12,5 +12,6 @@ namespace ITDeviceManager
         public DateTime? LastCheck { get; set; }
         public TimeSpan Uptime { get; set; }
         public string Reason { get; set; } = "";
+        public RebootReasonType RebootReasonType { get; set; } = RebootReasonType.None;
     }
 }

@@ -14,6 +14,13 @@ namespace ITDeviceManager
         {
             InitializeComponent();
 
+            dgvUnavailableDevices.Resize += (s, e) =>
+            {
+                ApplyRoundedCorners(dgvUnavailableDevices, 20);
+            };
+
+            ApplyRoundedCorners(dgvUnavailableDevices, 20);
+
             foreach (Device device in devices)
             {
                 dgvUnavailableDevices.Rows.Add(
@@ -21,11 +28,41 @@ namespace ITDeviceManager
                     device.Address
                 );
             }
+
+
+            dgvUnavailableDevices.ClearSelection();
+            dgvUnavailableDevices.CurrentCell = null;
+
+            dgvUnavailableDevices.SelectionChanged += (s, e) =>
+            {
+                dgvUnavailableDevices.ClearSelection();
+                dgvUnavailableDevices.CurrentCell = null;
+            };
+
         }
 
-        private void UnavailableDevicesForm_Load(object sender, EventArgs e)
-        {
+    [System.Runtime.InteropServices.DllImport("gdi32.dll")]
+        private static extern IntPtr CreateRoundRectRgn(
+             int nLeftRect,
+             int nTopRect,
+             int nRightRect,
+             int nBottomRect,
+             int nWidthEllipse,
+             int nHeightEllipse
+             );
 
+        private void ApplyRoundedCorners(Control control, int radius)
+        {
+            control.Region = Region.FromHrgn(
+                CreateRoundRectRgn(
+                    0,
+                    0,
+                    control.Width,
+                    control.Height,
+                    radius,
+                    radius
+                )
+            );
         }
     }
 }

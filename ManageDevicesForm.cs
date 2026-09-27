@@ -12,15 +12,58 @@ namespace ITDeviceManager
     {
         private readonly DeviceConfigurationService configurationService = new DeviceConfigurationService();
 
+        [System.Runtime.InteropServices.DllImport("gdi32.dll")]
+        private static extern IntPtr CreateRoundRectRgn(
+            int nLeftRect,
+            int nTopRect,
+            int nRightRect,
+            int nBottomRect,
+            int nWidthEllipse,
+            int nHeightEllipse
+        );
+
         public ManageDevicesForm()
         {
             InitializeComponent();
+            pnlDevices.Region = Region.FromHrgn(
+              CreateRoundRectRgn(0, 0, pnlDevices.Width, pnlDevices.Height, 15, 15)
+            );
 
             LoadConfiguredDevices();
+
+            btnAdd.EnabledChanged += Button_EnabledChanged;
+            btnClear.EnabledChanged += Button_EnabledChanged;
+            btnImport.EnabledChanged += Button_EnabledChanged;
+            
+
+            UpdateButtonStyle(btnAdd);
+            UpdateButtonStyle(btnClear);
+            UpdateButtonStyle(btnImport);
+           
         }
 
-        private void lblDevices_TextChanged(object sender, EventArgs e)
+        private void UpdateButtonStyle(Button button)
         {
+            if (button.Enabled)
+            {
+                button.BackColor = Color.White;
+                button.ForeColor = Color.Black;
+                button.FlatAppearance.BorderColor = Color.FromArgb(190, 225, 245);
+            }
+            else
+            {
+                button.BackColor = Color.FromArgb(225, 225, 225);
+                button.ForeColor = Color.Gray;
+                button.FlatAppearance.BorderColor = Color.FromArgb(170, 170, 170);
+            }
+        }
+
+        private void Button_EnabledChanged(object? sender, EventArgs e)
+        {
+            if (sender is Button button)
+            {
+                UpdateButtonStyle(button);
+            }
         }
 
         private void txtDevice_TextChanged(object sender, EventArgs e)
@@ -31,48 +74,54 @@ namespace ITDeviceManager
 
             lblDevices.Text = $"Equipos ({deviceCount})";
 
-            btnAdd.Enabled = deviceCount > 0;
+            btnAdd.Enabled = true;
             btnClear.Enabled = deviceCount > 0;
-            btnContinue.Enabled = false;
         }
 
         private void btnClear_Click(object sender, EventArgs e)
         {
-            configurationService.ClearDevices();
-
+           
             txtDevices.ReadOnly = false;
             txtDevices.Clear();
 
             btnImport.Enabled = true;
-            btnContinue.Enabled = false;
         }
 
         private void btnImport_Click(object sender, EventArgs e)
         {
             if (openFileDialogDevices.ShowDialog() == DialogResult.OK)
             {
-                txtDevices.Text = File.ReadAllText(openFileDialogDevices.FileName);
+                string contenido = File.ReadAllText(openFileDialogDevices.FileName);
+
+                MessageBox.Show(
+    $"Archivo: {openFileDialogDevices.FileName}\n\n" +
+    $"Existe: {File.Exists(openFileDialogDevices.FileName)}\n" +
+    $"Tamaño: {new FileInfo(openFileDialogDevices.FileName).Length} bytes\n\n" +
+    $"Contenido:\n{contenido}"
+);
+
+                txtDevices.Text = contenido;
             }
         }
 
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            List<ConfiguredDevice> devices = txtDevices.Lines.Where(line => !string.IsNullOrWhiteSpace(line)).Select(line => new ConfiguredDevice
-            {
-                Identifier = line.Trim()
-            })
-                .DistinctBy(device => device.Identifier,
-                            StringComparer.OrdinalIgnoreCase)
+            List<ConfiguredDevice> devices = txtDevices.Lines
+                .Where(line => !string.IsNullOrWhiteSpace(line))
+                .Select(line => new ConfiguredDevice
+                {
+                    Identifier = line.Trim()
+                })
+                .DistinctBy(
+                    device => device.Identifier,
+                    StringComparer.OrdinalIgnoreCase)
                 .ToList();
 
             configurationService.SaveDevices(devices);
 
-
-            btnAdd.Enabled = false;
-            btnImport.Enabled = false;
-            btnContinue.Enabled = true;
-
+            DialogResult = DialogResult.OK;
+            Close();
         }
 
         private void LoadConfiguredDevices()
@@ -82,6 +131,9 @@ namespace ITDeviceManager
 
             if (devices.Count == 0)
             {
+                btnAdd.Enabled = true;
+                btnClear.Enabled = false;
+                btnImport.Enabled = true;
                 return;
             }
 
@@ -90,15 +142,9 @@ namespace ITDeviceManager
                 .ToArray();
 
             btnAdd.Enabled = false;
-            btnImport.Enabled = false;
+            btnImport.Enabled = true;
             btnClear.Enabled = true;
-            btnContinue.Enabled = true;
         }
 
-        private void btnContinue_Click(object sender, EventArgs e)
-        {
-            DialogResult = DialogResult.OK;
-            Close();
-        }
     }
 }

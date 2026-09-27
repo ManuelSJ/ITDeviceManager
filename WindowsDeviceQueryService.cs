@@ -16,52 +16,78 @@ namespace ITDeviceManager
             {
                 string identifier = configuredDevice.Identifier;
 
-                ManagementScope scope =
-                    new ManagementScope(
-                        $@"\\{identifier}\root\cimv2");
-
-                scope.Connect();
-
-                ObjectQuery query =
-                    new ObjectQuery(
-                        "SELECT CSName, LastBootUpTime FROM Win32_OperatingSystem");
-
-                using ManagementObjectSearcher searcher =
-                    new ManagementObjectSearcher(scope, query);
-
-                foreach (ManagementObject result in searcher.Get())
+                try
                 {
-                    string computerName =
-                        result["CSName"]?.ToString() ?? identifier;
+                    ManagementScope scope =
+                        new ManagementScope(
+                            $@"\\{identifier}\root\cimv2");
 
-                    string? bootTimeValue =
-                        result["LastBootUpTime"]?.ToString();
+                    scope.Connect();
 
-                    DateTime bootTime =
-                        ManagementDateTimeConverter.ToDateTime(bootTimeValue);
+                    ObjectQuery query =
+                        new ObjectQuery(
+                            "SELECT CSName, LastBootUpTime FROM Win32_OperatingSystem");
 
-                    RebootStatus rebootStatus = windowsUpdateStatusService.GetRebootStatus(identifier);
+                    using ManagementObjectSearcher searcher =
+                        new ManagementObjectSearcher(scope, query);
 
-                    return new Device
+                    foreach (ManagementObject result in searcher.Get())
                     {
-                        Name = computerName,
-                        Address = identifier,
-                        Status = !rebootStatus.IsCheckSuccessful
-                            ? DeviceStatus.Unverified
-                            : rebootStatus.IsRebootRequired
-                            ? DeviceStatus.Pending
-                            : DeviceStatus.Ok,
+                        string computerName =
+                            result["CSName"]?.ToString() ?? identifier;
 
-                        LastCheck = DateTime.Now,
-                        Uptime = DateTime.Now - bootTime,
+                        string? bootTimeValue =
+                            result["LastBootUpTime"]?.ToString();
 
-                        Reason = rebootStatus.Reason
-                    };
+                        DateTime bootTime =
+                            ManagementDateTimeConverter.ToDateTime(bootTimeValue);
+
+                        RebootStatus rebootStatus =
+                            windowsUpdateStatusService.GetRebootStatus(identifier);
+
+                        return new Device
+                        {
+                            Name = computerName,
+                            Address = identifier,
+
+                            Status = !rebootStatus.IsCheckSuccessful
+                                ? DeviceStatus.Unverified
+                                : rebootStatus.IsRebootRequired
+                                    ? DeviceStatus.Pending
+                                    : DeviceStatus.Ok,
+
+                            LastCheck = DateTime.Now,
+                            Uptime = DateTime.Now - bootTime,
+
+                            Reason = rebootStatus.Reason,
+                            RebootReasonType = rebootStatus.ReasonType
+                        };
+                    }
+
+                    return CreateUnavailableDevice(
+                        identifier,
+                        "No se obtuvo información del sistema operativo.");
                 }
-
-                throw new InvalidOperationException(
-                    "No se obtuvo información del sistema operativo.");
+                catch (Exception ex)
+                {
+                    return CreateUnavailableDevice(
+                        identifier,
+                        ex.Message);
+                }
             });
+        }
+        private static Device CreateUnavailableDevice(
+    string identifier,
+    string reason)
+        {
+            return new Device
+            {
+                Name = identifier,
+                Address = identifier,
+                Status = DeviceStatus.Unknown,
+                LastCheck = DateTime.Now,
+                Reason = reason
+            };
         }
     }
 }

@@ -4,6 +4,16 @@ using System.Text;
 
 namespace ITDeviceManager
 {
+
+    public enum RebootReasonType
+    {
+        None,
+        WindowsUpdate,
+        ComponentServicing,
+        PendingFileOperation
+    }
+
+
     public class RebootStatus
     {
         public bool IsRebootRequired { get; set; }
@@ -12,5 +22,6 @@ namespace ITDeviceManager
 
         public string Reason { get; set; } = "";
 
+        public RebootReasonType ReasonType { get; set; }
     }
 }

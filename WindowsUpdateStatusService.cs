@@ -38,7 +38,8 @@ namespace ITDeviceManager
                     {
                         IsRebootRequired = true,
                         IsCheckSuccessful = true,
-                        Reason = "Reinicio pendiente por Windows Update"
+                        Reason = "Reinicio pendiente por Windows Update",
+                        ReasonType = RebootReasonType.WindowsUpdate
                     };
                 }
 
@@ -48,7 +49,8 @@ namespace ITDeviceManager
                     {
                         IsRebootRequired = true,
                         IsCheckSuccessful = true,
-                        Reason = "Reinicio pendiente por mantenimiento de Windows"
+                        Reason = "Reinicio pendiente por mantenimiento de Windows",
+                        ReasonType = RebootReasonType.ComponentServicing
                     };
                 }
 
@@ -58,7 +60,8 @@ namespace ITDeviceManager
                     {
                         IsRebootRequired = true,
                         IsCheckSuccessful = true,
-                        Reason = "Operación de archivos pendiente"
+                        Reason = "Operación de archivos pendiente",
+                        ReasonType = RebootReasonType.PendingFileOperation
                     };
                 }
 
@@ -66,7 +69,8 @@ namespace ITDeviceManager
                 {
                     IsRebootRequired = false,
                     IsCheckSuccessful = true,
-                    Reason = ""
+                    Reason = "",
+                    ReasonType = RebootReasonType.None
                 };
 
             }
@@ -77,7 +81,8 @@ namespace ITDeviceManager
                 {
                     IsRebootRequired = false,
                     IsCheckSuccessful = false,
-                    Reason = "No fue posible verificar el estado de reinicio"
+                    Reason = "No fue posible verificar el estado de reinicio",
+                    ReasonType = RebootReasonType.None
                 };
             }
         }

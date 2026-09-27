@@ -93,10 +93,6 @@ namespace ITDeviceManager
 
             monitoringTimer.Start();
         }
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-
-        }
 
         private async Task ScanDevicesAsync()
         {
@@ -122,12 +118,17 @@ namespace ITDeviceManager
                 int processedDevices = 0;
                 int checkedDevices = 0;
                 int pendingDevices = 0;
+                int unverifiedDevices = 0;
+                int windowsUpdateRows = 0;
+                int otherPendingRows = 0;
 
                 cardPending.CardValue = "0";
                 dgvPendingDevices.Rows.Clear();
 
                 cardUnavailable.CardValue = "0";
                 unavailableDevices.Clear();
+
+                cardUnverified.CardValue = "0";
 
                 foreach (ConfiguredDevice configuredDevice in configuredDevices)
                 {
@@ -154,7 +155,7 @@ namespace ITDeviceManager
                     if (device.Status != DeviceStatus.Unknown)
                     {
                         checkedDevices++;
-                        cardChecked.CardValue = processedDevices.ToString();
+                        cardChecked.CardValue = checkedDevices.ToString();
                     }
 
 
@@ -165,19 +166,39 @@ namespace ITDeviceManager
                         pendingDevices++;
                         cardPending.CardValue = pendingDevices.ToString();
 
-                        dgvPendingDevices.Rows.Add(
-                           device.Name ?? string.Empty,
-                           device.Address ?? string.Empty,
-                           $"{device.Uptime.Days} días",
-                           device.Reason ?? string.Empty,
-                           device.LastCheck?.ToString("dd/MM/yyyy HH:mm") ?? string.Empty
+                        if (device.RebootReasonType == RebootReasonType.WindowsUpdate)
+                        {
+                            dgvPendingDevices.Rows.Insert(
+                                windowsUpdateRows,
+                                device.Name ?? string.Empty,
+                                device.Address ?? string.Empty,
+                                $"{device.Uptime.Days} días",
+                                device.Reason ?? string.Empty,
+                                device.LastCheck?.ToString("dd/MM/yyyy HH:mm") ?? string.Empty
+                            );
 
+                            windowsUpdateRows++;
+                        }
+                        else
+                        {
+                            dgvPendingDevices.Rows.Insert(
+                                windowsUpdateRows + otherPendingRows,
+                                device.Name ?? string.Empty,
+                                device.Address ?? string.Empty,
+                                $"{device.Uptime.Days} días",
+                                device.Reason ?? string.Empty,
+                                device.LastCheck?.ToString("dd/MM/yyyy HH:mm") ?? string.Empty
+                            );
 
-                        );
+                            otherPendingRows++;
+                        }
                     }
 
                     if (device.Status == DeviceStatus.Unverified)
                     {
+                        unverifiedDevices++;
+                        cardUnverified.CardValue = unverifiedDevices.ToString();
+
                         dgvPendingDevices.Rows.Add(
                             device.Name ?? string.Empty,
                             device.Address ?? string.Empty,
@@ -198,6 +219,8 @@ namespace ITDeviceManager
                     int progress = processedDevices * 100 / configuredDevices.Count;
                     modernProgressBar1.Value = progress;
                 }
+
+              
 
                 modernProgressBar1.Value = 100;
 
