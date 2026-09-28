@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Management;
+using System.Net;
 
 namespace ITDeviceManager
 {
@@ -36,6 +37,8 @@ namespace ITDeviceManager
                         string computerName =
                             result["CSName"]?.ToString() ?? identifier;
 
+                        string address = ResolveAddress(identifier);
+
                         string? bootTimeValue =
                             result["LastBootUpTime"]?.ToString();
 
@@ -48,7 +51,7 @@ namespace ITDeviceManager
                         return new Device
                         {
                             Name = computerName,
-                            Address = identifier,
+                            Address = address,
 
                             Status = !rebootStatus.IsCheckSuccessful
                                 ? DeviceStatus.Unverified
@@ -76,14 +79,38 @@ namespace ITDeviceManager
                 }
             });
         }
+
+        private static string ResolveAddress(string identifier)
+        {
+            if (IPAddress.TryParse(identifier, out _))
+            {
+                return identifier;
+            }
+
+            try
+            {
+                IPAddress? address = Dns.GetHostAddresses(identifier)
+                    .FirstOrDefault(ip =>
+                        ip.AddressFamily ==
+                        System.Net.Sockets.AddressFamily.InterNetwork);
+
+                return address?.ToString() ?? identifier;
+            }
+            catch
+            {
+                return identifier;
+            }
+        }
+
+
         private static Device CreateUnavailableDevice(
-    string identifier,
-    string reason)
+        string identifier,
+         string reason)
         {
             return new Device
             {
                 Name = identifier,
-                Address = identifier,
+                Address = ResolveAddress(identifier),
                 Status = DeviceStatus.Unknown,
                 LastCheck = DateTime.Now,
                 Reason = reason
