@@ -25,12 +25,7 @@ namespace ITDeviceManager
                    remoteRegistry.OpenSubKey(
                         @"SOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\RebootPending");
 
-                using RegistryKey? sessionManagerKey =
-                   remoteRegistry.OpenSubKey(
-                        @"SYSTEM\CurrentControlSet\Control\Session Manager");
-
-                bool hasPendingFileRename =
-                    sessionManagerKey?.GetValue("PendingFileRenameOperations") != null;
+                
 
                 if (rebootRequiredKey != null)
                 {
@@ -54,16 +49,8 @@ namespace ITDeviceManager
                     };
                 }
 
-                if (hasPendingFileRename)
-                {
-                    return new RebootStatus
-                    {
-                        IsRebootRequired = true,
-                        IsCheckSuccessful = true,
-                        Reason = "Operación de archivos pendiente",
-                        ReasonType = RebootReasonType.PendingFileOperation
-                    };
-                }
+
+
 
                 return new RebootStatus
                 {

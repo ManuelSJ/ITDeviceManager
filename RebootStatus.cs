@@ -9,8 +9,7 @@ namespace ITDeviceManager
     {
         None,
         WindowsUpdate,
-        ComponentServicing,
-        PendingFileOperation
+        ComponentServicing
     }
 
 
