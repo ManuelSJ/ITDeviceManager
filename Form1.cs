@@ -15,6 +15,8 @@ namespace ITDeviceManager
         {
             InitializeComponent();
 
+            UpdateThemeButton();
+            ApplyTheme();
 
 
             dgvPendingDevices.Resize += (s, e) =>
@@ -57,6 +59,134 @@ namespace ITDeviceManager
         private const int WM_NCLBUTTONDOWN = 0xA1;
         private const int HTCAPTION = 0x2;
 
+        private void ApplyTheme()
+        {
+            AppTheme theme = ThemeManager.CurrentTheme;
+
+            // Fondo principal
+            BackColor = ThemeColors.Background(theme);
+
+            // Color del título principal
+            lblTitle.ForeColor = theme == AppTheme.Dark
+                ? Color.White
+                : SystemColors.Highlight;
+
+            // Tarjetas de estado
+            cardConfigured.ApplyTheme();
+            cardChecked.ApplyTheme();
+            cardPending.ApplyTheme();
+            cardUnavailable.ApplyTheme();
+            cardUnverified.ApplyTheme();
+
+            // Colores de los textos del panel de monitoreo
+            Color monitoringTextColor = theme == AppTheme.Dark
+                ? Color.White
+                : SystemColors.ControlText;
+
+            lblautoMonitor.ForeColor = monitoringTextColor;
+            lblIntervalText.ForeColor = monitoringTextColor;
+            lblNextScan.ForeColor = monitoringTextColor;
+            lblScanStatus.ForeColor = monitoringTextColor;
+
+            // Colores de la tabla de equipos pendientes
+            if (theme == AppTheme.Dark)
+            {
+                // Fondo general
+                dgvPendingDevices.BackgroundColor = Color.FromArgb(30, 32, 36);
+                dgvPendingDevices.GridColor = Color.FromArgb(65, 68, 73);
+
+                // Encabezado
+                dgvPendingDevices.ColumnHeadersDefaultCellStyle.BackColor =
+                    Color.FromArgb(45, 48, 54);
+
+                dgvPendingDevices.ColumnHeadersDefaultCellStyle.ForeColor =
+                    Color.White;
+
+                dgvPendingDevices.ColumnHeadersDefaultCellStyle.SelectionBackColor =
+                    Color.FromArgb(45, 48, 54);
+
+                dgvPendingDevices.ColumnHeadersDefaultCellStyle.SelectionForeColor =
+                    Color.White;
+
+                // Celdas
+                dgvPendingDevices.DefaultCellStyle.BackColor =
+                    Color.FromArgb(38, 41, 46);
+
+                dgvPendingDevices.DefaultCellStyle.ForeColor =
+                    Color.FromArgb(235, 235, 235);
+
+                dgvPendingDevices.DefaultCellStyle.SelectionBackColor =
+                    Color.FromArgb(65, 70, 78);
+
+                dgvPendingDevices.DefaultCellStyle.SelectionForeColor =
+                    Color.White;
+            }
+            else
+            {
+                // Restaurar colores originales
+                dgvPendingDevices.BackgroundColor = Color.White;
+                dgvPendingDevices.GridColor = Color.White;
+
+                // Encabezado original
+                dgvPendingDevices.ColumnHeadersDefaultCellStyle.BackColor =
+                    Color.FromArgb(190, 225, 245);
+
+                dgvPendingDevices.ColumnHeadersDefaultCellStyle.ForeColor =
+                    Color.Black;
+
+                dgvPendingDevices.ColumnHeadersDefaultCellStyle.SelectionBackColor =
+                    Color.FromArgb(190, 225, 245);
+
+                dgvPendingDevices.ColumnHeadersDefaultCellStyle.SelectionForeColor =
+                    Color.Black;
+
+                // Celdas originales
+                dgvPendingDevices.DefaultCellStyle.BackColor =
+                    Color.FromArgb(245, 248, 250);
+
+                dgvPendingDevices.DefaultCellStyle.ForeColor =
+                    Color.FromArgb(51, 51, 51);
+
+                dgvPendingDevices.DefaultCellStyle.SelectionBackColor =
+                    Color.WhiteSmoke;
+
+                dgvPendingDevices.DefaultCellStyle.SelectionForeColor =
+                    Color.Black;
+            }
+
+            // Colores de los botones del panel de monitoreo
+            if (theme == AppTheme.Dark)
+            {
+                btnManageDevices.BackColor = Color.FromArgb(45, 49, 55);
+                btnManageDevices.ForeColor = Color.White;
+
+                btnViewUnavailable.BackColor = Color.FromArgb(45, 49, 55);
+                btnViewUnavailable.ForeColor = Color.White;
+            }
+            else
+            {
+                btnManageDevices.BackColor = Color.White;
+                btnManageDevices.ForeColor = Color.FromArgb(25, 43, 70);
+
+                btnViewUnavailable.BackColor = Color.White;
+                btnViewUnavailable.ForeColor = Color.FromArgb(25, 43, 70);
+            }
+
+            // Colores del selector de intervalo
+            if (theme == AppTheme.Dark)
+            {
+                cmbInterval.BackColor = Color.FromArgb(45, 49, 55);
+                cmbInterval.ForeColor = Color.White;
+            }
+            else
+            {
+                cmbInterval.BackColor = Color.White;
+                cmbInterval.ForeColor = Color.Black;
+            }
+
+            // Actualizar apariencia
+            Invalidate();
+        }
         private void ApplyRoundedCorners(Control control, int radius)
         {
             Rectangle bounds = new Rectangle(0, 0, control.Width, control.Height);
@@ -220,7 +350,7 @@ namespace ITDeviceManager
                     modernProgressBar1.Value = progress;
                 }
 
-              
+
 
                 modernProgressBar1.Value = 100;
 
@@ -379,6 +509,29 @@ namespace ITDeviceManager
                 ReleaseCapture();
                 SendMessage(Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
             }
+        }
+
+        private void btnThemeToggle_Click(object sender, EventArgs e)
+        {
+            ThemeManager.ToggleTheme();
+
+            UpdateThemeButton();
+            ApplyTheme();
+        }
+
+        private void UpdateThemeButton()
+        {
+            btnThemeToggle.Text = string.Empty;
+
+            btnThemeToggle.Image = ThemeManager.CurrentTheme == AppTheme.Dark
+                ? Resources.IconSun
+                : Resources.IconMoon;
+
+            btnThemeToggle.ImageAlign = ContentAlignment.MiddleCenter;
+
+            btnThemeToggle.FlatStyle = FlatStyle.Flat;
+            btnThemeToggle.FlatAppearance.BorderSize = 0;
+            btnThemeToggle.TabStop = false;
         }
     }
 }

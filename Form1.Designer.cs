@@ -69,11 +69,11 @@
             cardChecked = new StatusCard();
             cardConfigured = new StatusCard();
             pnlTitleBar = new Panel();
+            btnThemeToggle = new Button();
             btnMinimize = new Button();
             btnMaximize = new Button();
             btnClose = new Button();
             lblTitleBar = new Label();
-            btnThemeToggle = new Button();
             pnlHeader.SuspendLayout();
             pnlMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvPendingDevices).BeginInit();
@@ -585,6 +585,22 @@
             pnlTitleBar.TabIndex = 21;
             pnlTitleBar.MouseDown += pnlTitleBar_MouseDown;
             // 
+            // btnThemeToggle
+            // 
+            btnThemeToggle.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnThemeToggle.Cursor = Cursors.Hand;
+            btnThemeToggle.FlatAppearance.BorderSize = 0;
+            btnThemeToggle.FlatStyle = FlatStyle.Flat;
+            btnThemeToggle.ForeColor = Color.White;
+            btnThemeToggle.Location = new Point(1016, 5);
+            btnThemeToggle.Name = "btnThemeToggle";
+            btnThemeToggle.Size = new Size(40, 35);
+            btnThemeToggle.TabIndex = 4;
+            btnThemeToggle.TabStop = false;
+            btnThemeToggle.Text = "C";
+            btnThemeToggle.UseVisualStyleBackColor = true;
+            btnThemeToggle.Click += btnThemeToggle_Click;
+            // 
             // btnMinimize
             // 
             btnMinimize.Cursor = Cursors.Hand;
@@ -647,20 +663,6 @@
             lblTitleBar.Size = new Size(115, 17);
             lblTitleBar.TabIndex = 0;
             lblTitleBar.Text = "ITDeviceManager";
-            // 
-            // btnThemeToggle
-            // 
-            btnThemeToggle.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnThemeToggle.Cursor = Cursors.Hand;
-            btnThemeToggle.FlatStyle = FlatStyle.Flat;
-            btnThemeToggle.ForeColor = Color.White;
-            btnThemeToggle.Location = new Point(961, 3);
-            btnThemeToggle.Name = "btnThemeToggle";
-            btnThemeToggle.Size = new Size(40, 35);
-            btnThemeToggle.TabIndex = 4;
-            btnThemeToggle.TabStop = false;
-            btnThemeToggle.Text = "C";
-            btnThemeToggle.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
