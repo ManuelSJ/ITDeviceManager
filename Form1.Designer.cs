@@ -33,6 +33,7 @@
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             pnlHeader = new Panel();
             lblTitle = new Label();
             monitoringTimer = new System.Windows.Forms.Timer(components);
@@ -69,6 +70,7 @@
             cardChecked = new StatusCard();
             cardConfigured = new StatusCard();
             pnlTitleBar = new Panel();
+            picAppIcon = new PictureBox();
             btnThemeToggle = new Button();
             btnMinimize = new Button();
             btnMaximize = new Button();
@@ -89,6 +91,7 @@
             fplProgress2.SuspendLayout();
             tlpStatusCards.SuspendLayout();
             pnlTitleBar.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)picAppIcon).BeginInit();
             SuspendLayout();
             // 
             // pnlHeader
@@ -573,6 +576,7 @@
             // pnlTitleBar
             // 
             pnlTitleBar.BackColor = Color.FromArgb(25, 43, 70);
+            pnlTitleBar.Controls.Add(picAppIcon);
             pnlTitleBar.Controls.Add(btnThemeToggle);
             pnlTitleBar.Controls.Add(btnMinimize);
             pnlTitleBar.Controls.Add(btnMaximize);
@@ -584,6 +588,16 @@
             pnlTitleBar.Size = new Size(1184, 42);
             pnlTitleBar.TabIndex = 21;
             pnlTitleBar.MouseDown += pnlTitleBar_MouseDown;
+            // 
+            // picAppIcon
+            // 
+            picAppIcon.BackColor = Color.Transparent;
+            picAppIcon.Location = new Point(7, 5);
+            picAppIcon.Name = "picAppIcon";
+            picAppIcon.Size = new Size(27, 27);
+            picAppIcon.SizeMode = PictureBoxSizeMode.Zoom;
+            picAppIcon.TabIndex = 5;
+            picAppIcon.TabStop = false;
             // 
             // btnThemeToggle
             // 
@@ -674,6 +688,7 @@
             Controls.Add(pnlHeader);
             Controls.Add(pnlTitleBar);
             FormBorderStyle = FormBorderStyle.None;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MinimumSize = new Size(1100, 700);
             Name = "MainForm";
             StartPosition = FormStartPosition.CenterScreen;
@@ -702,6 +717,7 @@
             tlpStatusCards.ResumeLayout(false);
             pnlTitleBar.ResumeLayout(false);
             pnlTitleBar.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)picAppIcon).EndInit();
             ResumeLayout(false);
         }
 
@@ -749,5 +765,6 @@
         private FlowLayoutPanel fplProgress2;
         private ModernProgressBar modernProgressBar1;
         private Button btnThemeToggle;
+        private PictureBox picAppIcon;
     }
 }

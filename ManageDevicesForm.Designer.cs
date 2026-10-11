@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ManageDevicesForm));
             lblTitle = new Label();
             lblInstructions = new Label();
             lblDevices = new Label();
@@ -168,6 +169,7 @@
             Controls.Add(lblInstructions);
             Controls.Add(lblTitle);
             FormBorderStyle = FormBorderStyle.FixedDialog;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             MinimizeBox = false;
             MinimumSize = new Size(550, 400);

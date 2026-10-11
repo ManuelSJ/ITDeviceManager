@@ -15,6 +15,8 @@ namespace ITDeviceManager
         {
             InitializeComponent();
 
+            picAppIcon.Image = this.Icon.ToBitmap();
+
             UpdateThemeButton();
             ApplyTheme();
 

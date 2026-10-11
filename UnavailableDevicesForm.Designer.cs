@@ -30,6 +30,7 @@
         {
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UnavailableDevicesForm));
             dgvUnavailableDevices = new DataGridView();
             colDevice = new DataGridViewTextBoxColumn();
             colAddress = new DataGridViewTextBoxColumn();
@@ -90,10 +91,10 @@
             ClientSize = new Size(384, 461);
             Controls.Add(dgvUnavailableDevices);
             FormBorderStyle = FormBorderStyle.FixedDialog;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "UnavailableDevicesForm";
-            ShowIcon = false;
             StartPosition = FormStartPosition.CenterParent;
             Text = "Equipos no disponibles";
             ((System.ComponentModel.ISupportInitialize)dgvUnavailableDevices).EndInit();
