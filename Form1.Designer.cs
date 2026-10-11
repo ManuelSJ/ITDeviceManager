@@ -73,6 +73,7 @@
             btnMaximize = new Button();
             btnClose = new Button();
             lblTitleBar = new Label();
+            btnThemeToggle = new Button();
             pnlHeader.SuspendLayout();
             pnlMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvPendingDevices).BeginInit();
@@ -572,6 +573,7 @@
             // pnlTitleBar
             // 
             pnlTitleBar.BackColor = Color.FromArgb(25, 43, 70);
+            pnlTitleBar.Controls.Add(btnThemeToggle);
             pnlTitleBar.Controls.Add(btnMinimize);
             pnlTitleBar.Controls.Add(btnMaximize);
             pnlTitleBar.Controls.Add(btnClose);
@@ -645,6 +647,20 @@
             lblTitleBar.Size = new Size(115, 17);
             lblTitleBar.TabIndex = 0;
             lblTitleBar.Text = "ITDeviceManager";
+            // 
+            // btnThemeToggle
+            // 
+            btnThemeToggle.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnThemeToggle.Cursor = Cursors.Hand;
+            btnThemeToggle.FlatStyle = FlatStyle.Flat;
+            btnThemeToggle.ForeColor = Color.White;
+            btnThemeToggle.Location = new Point(961, 3);
+            btnThemeToggle.Name = "btnThemeToggle";
+            btnThemeToggle.Size = new Size(40, 35);
+            btnThemeToggle.TabIndex = 4;
+            btnThemeToggle.TabStop = false;
+            btnThemeToggle.Text = "C";
+            btnThemeToggle.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
@@ -730,5 +746,6 @@
         private Label lblScanStatus;
         private FlowLayoutPanel fplProgress2;
         private ModernProgressBar modernProgressBar1;
+        private Button btnThemeToggle;
     }
 }
