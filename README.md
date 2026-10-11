@@ -65,8 +65,9 @@ ITDeviceManager is a Windows desktop application built with **C#**, **.NET 10**,
 
 ## Current testing status
 
-- Completed: device management, unavailable-device handling, interval selection, manual scanning, configuration persistence, empty-device-list handling, local portable execution, and light/dark theme checks.
-- Pending: verifying that an automatic scan runs after the full scheduled interval; testing the portable build on a second computer.
+- Completed: device management, unavailable-device handling, interval selection, manual scanning, configuration persistence, empty-device-list handling, and local portable execution.
+- Automatic monitoring validated: the scheduled scan started after the 2-hour interval, the progress indicator was activated, and the next scan was scheduled successfully.
+- Pending: validating an automatic scan with configured devices and testing the portable build on a second Windows computer.
 
 ---
 
@@ -135,5 +136,6 @@ ITDeviceManager is a Windows desktop application built with **C#**, **.NET 10**,
 
 ## Estado de las pruebas
 
-- **Superadas:** administración de equipos, identificación de equipos no disponibles, selección de intervalos, consultas manuales, persistencia de configuración, lista vacía, ejecución portable local y verificación de temas claro/oscuro.
-- **Pendientes:** comprobar una consulta automática al cumplirse el intervalo completo y probar el ejecutable en otra computadora.
+- Completado: administración de equipos, manejo de equipos no disponibles, selección de intervalos, consultas manuales, persistencia de configuración, manejo de listas vacías y ejecución local de la versión portable.
+- Monitoreo automático validado: la consulta programada se inició después del intervalo de 2 horas, se activó el indicador de progreso y se programó correctamente la siguiente consulta.
+- Pendiente: validar una consulta automática con equipos configurados y probar la versión portable en una segunda computadora Windows.
